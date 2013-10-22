@@ -27,7 +27,7 @@ internal class CSharpUpdater
 		
 		var replacementCollector = new ReplacementCollector();
 
-		var gameObjectReferenceCollector = new GameObjectReferenceCollector(replacementCollector);
+		var gameObjectReferenceCollector = new GameObjectReferenceCollector(replacementCollector, resolver);
 		syntaxTree.AcceptVisitor(gameObjectReferenceCollector);
 
 		var rigidBodyPropertyGetterCollector = new DepricatedComponentPropertyGetterCollector(replacementCollector, resolver);

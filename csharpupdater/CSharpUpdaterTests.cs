@@ -9,15 +9,17 @@ namespace csharpupdater
 		public void Simple1()
 		{
 			var input = 
-				@"class Lucas
+				@"using UnityEngine;
+class Lucas
 {
 	GameObject go; //this is a nice one
 }";
 
 			var expected =
-				@"class Lucas
+				@"using UnityEngine;
+class Lucas
 {
-	UnityEngine.Core.SceneObject go; //this is a nice one
+	Unity.Runtime.Core.SceneObject go; //this is a nice one
 }";
 
 			Test(expected, input);
@@ -27,17 +29,19 @@ namespace csharpupdater
 		public void MultipleReferences()
 		{
 			var input = 
-				@"class Lucas
+				@"using UnityEngine;
+class Lucas
 {
 	GameObject go; //this is a nice one
 	GameObject go2; //this is a nice one too
 }";
 
 			var expected =
-				@"class Lucas
+				@"using UnityEngine;
+class Lucas
 {
-	UnityEngine.Core.SceneObject go; //this is a nice one
-	UnityEngine.Core.SceneObject go2; //this is a nice one too
+	Unity.Runtime.Core.SceneObject go; //this is a nice one
+	Unity.Runtime.Core.SceneObject go2; //this is a nice one too
 }";
 
 			Test(expected, input);
@@ -47,33 +51,47 @@ namespace csharpupdater
 		public void AsMethodArgument()
 		{
 			var input =
-				@"class Lucas
+@"using UnityEngine;
+class Lucas
 {
 	void Kill(GameObject go) {}
 }";
 
 			var expected =
-				@"class Lucas
+				@"using UnityEngine;
+class Lucas
 {
-	void Kill(UnityEngine.Core.SceneObject go) {}
+	void Kill(Unity.Runtime.Core.SceneObject go) {}
 }";
 
 			Test(expected, input);
 		}
 
 		[Test]
+		public void AsGenericConstraint()
+		{
+			var input =    "class Lucas<T> where T : UnityEngine.GameObject {}";
+			var expected = "class Lucas<T> where T : Unity.Runtime.Core.SceneObject {}";
+
+			Test(expected, input);
+		}
+
+
+		[Test]
 		public void AsGenericListArgument()
 		{
 			var input =
-				@"class Lucas
+				@"using UnityEngine;
+class Lucas
 {
 	List<GameObject> mylist;
 }";
 
 			var expected =
-				@"class Lucas
+				@"using UnityEngine;
+class Lucas
 {
-	List<UnityEngine.Core.SceneObject> mylist;
+	List<Unity.Runtime.Core.SceneObject> mylist;
 }";
 
 			Test(expected, input);
