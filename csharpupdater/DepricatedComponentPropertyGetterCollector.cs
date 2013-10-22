@@ -10,7 +10,7 @@ internal class DepricatedComponentPropertyGetterCollector : DepthFirstAstVisitor
 	private readonly CSharpAstResolver _resolver;
 	private readonly ReplacementCollector _replacementCollector;
 	private string _deprecatedProperty = "UnityEngine.Component.rigidbody";
-	private string _replacement = "GetComponent<Rigidbody>()";
+	private string _replacement = "GetComponent<Unity.Runtime.Physics.RigidBody>()";
 
 	public DepricatedComponentPropertyGetterCollector(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
 	{

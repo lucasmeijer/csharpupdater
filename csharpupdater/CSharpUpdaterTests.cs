@@ -96,7 +96,7 @@ namespace csharpupdater
 {
 	void Start()
 	{
-		GetComponent<Rigidbody>().mass = 10f;
+		GetComponent<Unity.Runtime.Physics.RigidBody>().mass = 10f;
 	}
 }";
 
@@ -174,7 +174,7 @@ class Lucas
 	void Start()
 	{
 		MonoBehaviour b;
-		float a = b.GetComponent<Rigidbody>().mass;
+		float a = b.GetComponent<Unity.Runtime.Physics.RigidBody>().mass;
 	}
 }";
 
