@@ -8,57 +8,51 @@ namespace csharpupdater
 	class TypeReferenceReplacerTests : CSharpUpdaterTestsBase
 	{
 		[Test]
-		public void Simple1()
+		public void AsFieldType()
 		{
-			var input =    "using UnityEngine; class C { GameObject go; //this is a nice one }";
-			var expected = "using UnityEngine; class C { Unity.Runtime.Core.SceneObject go; //this is a nice one }";
-
-			Test(expected, input);
+			var i = "using UnityEngine; class C { GameObject go; //this is a nice one }";
+			var e = "using UnityEngine; class C { Unity.Runtime.Core.SceneObject go; //this is a nice one }";
+			Test(e, i);
 		}
 
 		[Test]
 		public void MultipleReferences()
 		{
-			var input    = "using UnityEngine; class C { GameObject go; GameObject go2; }";
-			var expected = "using UnityEngine; class C { Unity.Runtime.Core.SceneObject go; Unity.Runtime.Core.SceneObject go2; }";
-		
-			Test(expected, input);
+			var i = "using UnityEngine; class C { GameObject go; GameObject go2; }";
+			var e = "using UnityEngine; class C { Unity.Runtime.Core.SceneObject go; Unity.Runtime.Core.SceneObject go2; }";
+			Test(e, i);
 		}
 
 		[Test]
 		public void AsMethodArgument()
 		{
-			var input = "using UnityEngine; class C { void Kill(GameObject go) {} }";
-			var expected ="using UnityEngine; class C { void Kill(Unity.Runtime.Core.SceneObject go) {} }";
-
-			Test(expected, input);
+			var i = "using UnityEngine; class C { void Kill(GameObject go) {} }";
+			var e = "using UnityEngine; class C { void Kill(Unity.Runtime.Core.SceneObject go) {} }";
+			Test(e, i);
 		}
 
 		[Test]
 		public void AsGenericConstraint()
 		{
-			var input    = "class Lucas<T> where T : UnityEngine.GameObject {}";
-			var expected = "class Lucas<T> where T : Unity.Runtime.Core.SceneObject {}";
-
-			Test(expected, input);
+			var i = "class C<T> where T : UnityEngine.GameObject {}";
+			var e = "class C<T> where T : Unity.Runtime.Core.SceneObject {}";
+			Test(e, i);
 		}
 
 		[Test]
-		public void ArrayOfGameObject()
+		public void AsFieldOfArrayOf()
 		{
-			var input    = "class Lucas { UnityEngine.GameObject[] a; }";
-			var expected = "class Lucas { Unity.Runtime.Core.SceneObject[] a; }";
-
-			Test(expected, input);
+			var i = "class C { UnityEngine.GameObject[] a; }";
+			var e = "class C { Unity.Runtime.Core.SceneObject[] a; }";
+			Test(e, i);
 		}
 
 		[Test]
 		public void AsGenericListArgument()
 		{
-			var input    = "using UnityEngine; class C { List<GameObject> mylist; }";
-			var expected = "using UnityEngine; class C { List<Unity.Runtime.Core.SceneObject> mylist; }";
-
-			Test(expected, input);
+			var i = "using UnityEngine; class C { List<GameObject> mylist; }";
+			var e = "using UnityEngine; class C { List<Unity.Runtime.Core.SceneObject> mylist; }";
+			Test(e, i);
 		}
 
 		protected override IEnumerable<ReplacingAstVisotor> GetPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
