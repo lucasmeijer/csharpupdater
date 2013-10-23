@@ -1,10 +1,7 @@
-﻿using System;
-using ICSharpCode.NRefactory.CSharp;
+﻿using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Editor;
-using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
 
 internal class CSharpUpdater
 {
@@ -27,10 +24,10 @@ internal class CSharpUpdater
 		
 		var replacementCollector = new ReplacementCollector();
 
-		var gameObjectReferenceCollector = new GameObjectReferenceCollector(replacementCollector, resolver);
+		var gameObjectReferenceCollector = new TypeReferenceReplacer(replacementCollector, resolver);
 		syntaxTree.AcceptVisitor(gameObjectReferenceCollector);
 
-		var rigidBodyPropertyGetterCollector = new DepricatedComponentPropertyGetterCollector(replacementCollector, resolver);
+		var rigidBodyPropertyGetterCollector = new DepricatedComponentPropertyGetterReplacer(replacementCollector, resolver);
 		syntaxTree.AcceptVisitor(rigidBodyPropertyGetterCollector);
 
 		return replacementCollector.ApplyTo(doc);
