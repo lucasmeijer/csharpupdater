@@ -16,7 +16,7 @@ internal class CSharpUpdater
 		
 		IProjectContent project = new CSharpProjectContent();
 		var cecilLoader = new CecilLoader { LazyLoad = true };
-		var assembly = cecilLoader.LoadAssemblyFile("c:/work/build/WindowsEditor/Data/Managed/UnityEngine.dll");
+		var assembly = cecilLoader.LoadAssemblyFile("C:/Program Files (x86)/Unity/Editor/Data/PlaybackEngines/windowsstandaloneplayer/Managed/UnityEngine.dll");
 		project = project.AddAssemblyReferences(assembly);
 
 		project.AddAssemblyReferences(new CecilLoader().LoadAssemblyFile(typeof (object).Assembly.Location));

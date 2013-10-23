@@ -5,7 +5,7 @@ using ICSharpCode.NRefactory.TypeSystem;
 
 internal class ReplacingAstVisotor : DepthFirstAstVisitor
 {
-	private CSharpAstResolver _resolver;
+	protected CSharpAstResolver _resolver;
 	protected ReplacementCollector _replacementCollector;
 
 	public ReplacingAstVisotor(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
