@@ -8,7 +8,7 @@ namespace csharpupdater
 	class DepricatedComponentGetterReplacerTests : CSharpUpdaterTestsBase
 	{
 		[Test]
-		public void GetRigidBodyToGetComponent()
+		public void WillReplaceInIdentifierForm()
 		{
 			var i = "class C : UnityEngine.MonoBehaviour { void Start() { rigidbody.mass = 10f; } }";
 			var e = "class C : UnityEngine.MonoBehaviour { void Start() { GetComponent<Unity.Runtime.Physics.RigidBody>().mass = 10f; } }";
@@ -16,11 +16,19 @@ namespace csharpupdater
 		}
 
 		[Test]
+		public void WillReplacePropertyInMemberReferenceForm()
+		{
+			var i = "using UnityEngine; class C { void Start() { MonoBehaviour b; float a = b.rigidbody.mass; } }";
+			var e ="using UnityEngine; class C { void Start() { MonoBehaviour b; float a = b.GetComponent<Unity.Runtime.Physics.RigidBody>().mass; } }";
+		
+			Test(e,i);
+		}
+
+		[Test]
 		public void WillNotModifySomethingCalledMonoBehaviourButThatIsNotOurMonoBehaviour()
 		{
 			//notice MonoBehaviour is unresolvable to UnityEngine.MonoBehaviour, because there's no using statement.
-			var i = "class C : MonoBehaviour { void Start()	{ rigidbody.mass = 10f;	} }";
-			AssertIsNotModified(i);
+			AssertIsNotModified("class C : MonoBehaviour { void Start()	{ rigidbody.mass = 10f;	} }");
 		}
 
 		[Test]
@@ -53,15 +61,6 @@ class Lucas : MonoBehaviour
 			AssertIsNotModified(input);
 		}
 
-
-		[Test]
-		public void WillReplacePropertyInMemberReferenceForm()
-		{
-			var i = "using UnityEngine; class C { void Start() { MonoBehaviour b; float a = b.rigidbody.mass; } }";
-			var e ="using UnityEngine; class C { void Start() { MonoBehaviour b; float a = b.GetComponent<Unity.Runtime.Physics.RigidBody>().mass; } }";
-		
-			Test(e,i);
-		}
 
 		protected override IEnumerable<ReplacingAstVisotor> GetPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
 		{
