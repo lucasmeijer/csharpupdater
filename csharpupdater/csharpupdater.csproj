@@ -68,6 +68,8 @@
     <Compile Include="CSharpUpdater.cs" />
     <Compile Include="DepricatedComponentGetterReplacerTests.cs" />
     <Compile Include="CSharpUpdaterTestsBase.cs" />
+    <Compile Include="PropertyUpperCaser.cs" />
+    <Compile Include="PropertyUpperCaserTests.cs" />
     <Compile Include="TypeReferenceReplacer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
