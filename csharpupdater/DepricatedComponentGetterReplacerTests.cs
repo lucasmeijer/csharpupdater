@@ -10,55 +10,29 @@ namespace csharpupdater
 		[Test]
 		public void GetRigidBodyToGetComponent()
 		{
-			var input =
-@"class Lucas : UnityEngine.MonoBehaviour
-{
-	void Start()
-	{
-		rigidbody.mass = 10f;
-	}
-}";
-
-			var expected =
-@"class Lucas : UnityEngine.MonoBehaviour
-{
-	void Start()
-	{
-		GetComponent<Unity.Runtime.Physics.RigidBody>().mass = 10f;
-	}
-}";
-
-			Test(expected, input);
+			var i = "class C : UnityEngine.MonoBehaviour { void Start() { rigidbody.mass = 10f; } }";
+			var e = "class C : UnityEngine.MonoBehaviour { void Start() { GetComponent<Unity.Runtime.Physics.RigidBody>().mass = 10f; } }";
+			Test(e,i);
 		}
 
 		[Test]
-		public void LooksLikeRigidBodyGetterButIsnt2()
+		public void WillNotModifySomethingCalledMonoBehaviourButThatIsNotOurMonoBehaviour()
 		{
 			//notice MonoBehaviour is unresolvable to UnityEngine.MonoBehaviour, because there's no using statement.
-			var input =
-@"class Lucas : MonoBehaviour
-{
-	void Start()
-	{
-		rigidbody.mass = 10f;
-	}
-}";
-			AssertIsNotModified(input);
+			var i = "class C : MonoBehaviour { void Start()	{ rigidbody.mass = 10f;	} }";
+			AssertIsNotModified(i);
 		}
 
 		[Test]
-		public void LooksLikeRigidBodyGetterButIsnt1()
+		public void WillNotModifyLocalVariableCalledRigidBody()
 		{
-			var input =
-@"class Lucas : MonoBehaviour
-{
-	void Start()
-	{
-		Rigidbody rigidBody = null;
-		rigidbody.mass = 10f;
-	}
-}";
-			AssertIsNotModified(input);
+			AssertIsNotModified("class C : UnityEngine.MonoBehaviour { void Start() { int rigidbody = 0; rigidbody = 1; } }");
+		}
+
+		[Test]
+		public void WillNotModifyLocalVariableCalledRigidBodyOfTypeRigidbody()
+		{
+			AssertIsNotModified("using UnityEngine; class C : MonoBehaviour { void Start() { Rigidbody rigidbody = null; rigidbody.mass = 10f; } }");
 		}
 
 		[Test]
@@ -81,32 +55,12 @@ class Lucas : MonoBehaviour
 
 
 		[Test]
-		public void rigidBodyFromOutside()
+		public void WillReplacePropertyInMemberReferenceForm()
 		{
-			var input =
-@"
-using UnityEngine;
-class Lucas
-{
-	void Start()
-	{
-		MonoBehaviour b;
-		float a = b.rigidbody.mass;
-	}
-}";
-			var expect =
-@"
-using UnityEngine;
-class Lucas
-{
-	void Start()
-	{
-		MonoBehaviour b;
-		float a = b.GetComponent<Unity.Runtime.Physics.RigidBody>().mass;
-	}
-}";
-
-			Test(expect,input);
+			var i = "using UnityEngine; class C { void Start() { MonoBehaviour b; float a = b.rigidbody.mass; } }";
+			var e ="using UnityEngine; class C { void Start() { MonoBehaviour b; float a = b.GetComponent<Unity.Runtime.Physics.RigidBody>().mass; } }";
+		
+			Test(e,i);
 		}
 
 		protected override IEnumerable<ReplacingAstVisotor> GetPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
