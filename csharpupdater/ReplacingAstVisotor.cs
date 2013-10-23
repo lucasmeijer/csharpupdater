@@ -32,7 +32,7 @@ internal class ReplacingAstVisotor : DepthFirstAstVisitor
 		return typeResolveResult.Type.FullName == expectedType;
 	}
 
-	private IMember ResolveMember(AstNode astNode)
+	protected IMember ResolveMember(AstNode astNode)
 	{
 		var resolveResult = _resolver.Resolve(astNode);
 		var memberResolveResult = resolveResult as MemberResolveResult;

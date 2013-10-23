@@ -1,20 +1,24 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using ICSharpCode.NRefactory.CSharp.Resolver;
+using NUnit.Framework;
 
 namespace csharpupdater
 {
-	internal class CSharpUpdaterTestsBase
+	internal abstract class CSharpUpdaterTestsBase
 	{
-		protected static void AssertIsNotModified(string input)
+		protected void AssertIsNotModified(string input)
 		{
 			Test(input, input);
 		}
 
-		protected static void Test(string expected, string input)
+		protected void Test(string expected, string input)
 		{
 			var updater = new CSharpUpdater();
-			var output = updater.Update(input);
+			var output = updater.Update(input, GetPipeline);
 			Assert.AreEqual(
 				expected, output);
 		}
+
+		protected abstract IEnumerable<ReplacingAstVisotor> GetPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver);
 	}
 }

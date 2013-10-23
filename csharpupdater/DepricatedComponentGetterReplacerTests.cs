@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using ICSharpCode.NRefactory.CSharp.Resolver;
+using NUnit.Framework;
 
 namespace csharpupdater
 {
@@ -105,6 +107,11 @@ class Lucas
 }";
 
 			Test(expect,input);
+		}
+
+		protected override IEnumerable<ReplacingAstVisotor> GetPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
+		{
+			yield return new DepricatedComponentPropertyGetterReplacer(replacementCollector, resolver);
 		}
 	}
 }

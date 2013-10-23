@@ -1,9 +1,11 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using ICSharpCode.NRefactory.CSharp.Resolver;
+using NUnit.Framework;
 
 namespace csharpupdater
 {
 	[TestFixture]
-	class TypeReferenceReplacerTests : DepricatedComponentGetterReplacerTests
+	class TypeReferenceReplacerTests : CSharpUpdaterTestsBase
 	{
 		[Test]
 		public void Simple1()
@@ -105,5 +107,9 @@ class Lucas
 			Test(expected, input);
 		}
 
+		protected override IEnumerable<ReplacingAstVisotor> GetPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
+		{
+			yield return new TypeReferenceReplacer(replacementCollector,resolver);
+		}
 	}
 }

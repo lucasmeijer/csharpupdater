@@ -41,6 +41,6 @@ internal class DepricatedComponentPropertyGetterReplacer : ReplacingAstVisotor
 		if (match == null)
 			return;
 		
-		_replacementCollector.Add(expressionToReplace, match.Item2);
+		_replacementCollector.Add(expressionToReplace, "GetComponent<"+match.Item2+">()");
 	}
 }
