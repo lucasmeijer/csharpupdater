@@ -2,7 +2,7 @@
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 
-internal class PropertyUpperCaser : ReplacingAstVisotor
+internal class PropertyUpperCaser : ReplacingAstVisitor
 {
 	public PropertyUpperCaser(ReplacementCollector replacementCollector, CSharpAstResolver resolver) : base(replacementCollector,resolver)
 	{

@@ -4,7 +4,7 @@ using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using NUnit.Framework;
 
-class MemberReferenceReplacer : ReplacingAstVisotor
+class MemberReferenceReplacer : ReplacingAstVisitor
 {
 	public MemberReferenceReplacer(ReplacementCollector replacementCollector, CSharpAstResolver resolver) : base(replacementCollector, resolver)
 	{
@@ -48,7 +48,7 @@ class MemberReferenceReplacerTests : CSharpUpdaterTestsBase
 		Test(e, i);
 	}
 
-	protected override IEnumerable<ReplacingAstVisotor> GetPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
+	protected override IEnumerable<ReplacingAstVisitor> GetPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
 	{
 		yield return new MemberReferenceReplacer(replacementCollector,resolver);
 	}

@@ -19,6 +19,6 @@ namespace csharpupdater
 				expected, output);
 		}
 
-		protected abstract IEnumerable<ReplacingAstVisotor> GetPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver);
+		protected abstract IEnumerable<ReplacingAstVisitor> GetPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver);
 	}
 }

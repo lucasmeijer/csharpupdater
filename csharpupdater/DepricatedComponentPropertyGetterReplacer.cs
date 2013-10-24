@@ -8,7 +8,7 @@ using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 
-internal class DepricatedComponentPropertyGetterReplacer : ReplacingAstVisotor
+internal class DepricatedComponentPropertyGetterReplacer : ReplacingAstVisitor
 {
 	public DepricatedComponentPropertyGetterReplacer(ReplacementCollector replacementCollector, CSharpAstResolver resolver) : base(replacementCollector, resolver)
 	{

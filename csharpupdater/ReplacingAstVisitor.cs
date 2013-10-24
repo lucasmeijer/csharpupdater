@@ -3,12 +3,12 @@ using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 
-internal class ReplacingAstVisotor : DepthFirstAstVisitor
+internal class ReplacingAstVisitor : DepthFirstAstVisitor
 {
 	protected CSharpAstResolver _resolver;
 	protected ReplacementCollector _replacementCollector;
 
-	public ReplacingAstVisotor(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
+	public ReplacingAstVisitor(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
 	{
 		_replacementCollector = replacementCollector;
 		_resolver = resolver;

@@ -1,7 +1,7 @@
 ﻿using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 
-internal class TypeReferenceReplacer : ReplacingAstVisotor
+internal class TypeReferenceReplacer : ReplacingAstVisitor
 {
 	private static readonly string _oldFullTypeName = "UnityEngine.GameObject";
 	private static readonly string _newFullTypeName = "Unity.Runtime.Core.SceneObject";

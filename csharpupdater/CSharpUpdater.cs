@@ -8,7 +8,7 @@ using ICSharpCode.NRefactory.TypeSystem;
 
 internal class CSharpUpdater
 {
-	public string Update(string input, Func<ReplacementCollector, CSharpAstResolver,IEnumerable<ReplacingAstVisotor>> pipeLineProvider)
+	public string Update(string input, Func<ReplacementCollector, CSharpAstResolver,IEnumerable<ReplacingAstVisitor>> pipeLineProvider)
 	{
 		var parser = new CSharpParser();
 		var doc = new ReadOnlyDocument(input);
@@ -35,7 +35,7 @@ internal class CSharpUpdater
 		return replacementCollector.ApplyTo(doc);
 	}
 
-	private IEnumerable<ReplacingAstVisotor> BuildPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
+	private IEnumerable<ReplacingAstVisitor> BuildPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
 	{
 		yield return new TypeReferenceReplacer(replacementCollector, resolver);
 		yield return new DepricatedComponentPropertyGetterReplacer(replacementCollector, resolver);
