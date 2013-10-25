@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Boo.Lang.Compiler.Ast;
 using Boo.Lang.Compiler.TypeSystem;
-using NUnit.Framework;
 
 class DepricatedComponentPropertyGetterReplacer : ReplacingAstVisitor
 {

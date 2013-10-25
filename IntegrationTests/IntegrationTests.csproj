@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DepricatedComponentGetterReplacerTests.cs" />
+    <Compile Include="MemberReferenceReplacerTests.cs" />
     <Compile Include="PropretyUpperCaserTests.cs" />
     <Compile Include="IntegrationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

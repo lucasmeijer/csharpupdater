@@ -41,6 +41,7 @@ public class CSharpUpdater : IScriptUpdater
 
 	private IEnumerable<ReplacingAstVisitor> BuildPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
 	{
+		yield return new MemberReferenceReplacer(replacementCollector, resolver);
 		yield return new TypeReferenceReplacer(replacementCollector, resolver);
 		yield return new DepricatedComponentPropertyGetterReplacer(replacementCollector, resolver);
 		yield return new PropertyUpperCaser(replacementCollector, resolver);

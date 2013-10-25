@@ -28,28 +28,3 @@ class MemberReferenceReplacer : ReplacingAstVisitor
 			_replacementCollector.Add(nodeToReplace, "SceneObject");
 	}
 }
-
-	
-class MemberReferenceReplacerTests : CSharpUpdaterTestsBase
-{
-	[Test]
-	public void WillReplaceInIdentifierForm()
-	{
-		var i = "using UnityEngine; class L : MonoBehaviour { void Start() { Destroy(gameObject); } } ";
-		var e = "using UnityEngine; class L : MonoBehaviour { void Start() { Destroy(SceneObject); } } ";
-		Test(e,i);
-	}
-
-	[Test]
-	public void WillReplaceInMemberReferenceForm()
-	{
-		var i = "class C { void F() { UnityEngine.MonoBehaviour mb = null; mb.gameObject = null; } }";
-		var e = "class C { void F() { UnityEngine.MonoBehaviour mb = null; mb.SceneObject = null; } }";
-		Test(e, i);
-	}
-
-	protected override IEnumerable<ReplacingAstVisitor> PipelineForTest(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
-	{
-		yield return new MemberReferenceReplacer(replacementCollector,resolver);
-	}
-}
