@@ -12,6 +12,9 @@ class MemberReferenceReplacer : ReplacingAstVisitor
 	public override void OnMemberReferenceExpression(MemberReferenceExpression node)
 	{
 		base.EnterMemberReferenceExpression(node);
+		if (node.Entity == null)
+			return;
+
 		if (node.Entity.FullName != "UnityEngine.Component.gameObject")
 			return;
 

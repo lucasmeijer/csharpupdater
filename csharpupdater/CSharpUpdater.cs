@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Editor;
-using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 
-internal class CSharpUpdater
+public class CSharpUpdater : IScriptUpdater
 {
-	public string Update(string input, Func<ReplacementCollector, CSharpAstResolver,IEnumerable<ReplacingAstVisitor>> pipeLineProvider)
+	public string Update(string input)
+	{
+		return Update(input, null);
+	}
+
+	internal string Update(string input, Func<ReplacementCollector, CSharpAstResolver,IEnumerable<ReplacingAstVisitor>> pipeLineProvider)
 	{
 		var parser = new CSharpParser();
 		var doc = new ReadOnlyDocument(input);

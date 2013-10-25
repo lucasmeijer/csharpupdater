@@ -6,3 +6,5 @@ ScriptUpdating/bin/
 ScriptUpdating/obj/
 csharpupdater.sln.DotSettings.user
 csharpupdater.v11.suo
+IntegrationTests/bin/
+IntegrationTests/obj/
