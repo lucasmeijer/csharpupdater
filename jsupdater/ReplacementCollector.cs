@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Boo.Lang.Compiler.Ast;
 
 internal class ReplacementCollector
@@ -21,7 +22,8 @@ internal class ReplacementCollector
 	public string ApplyOn(string input)
 	{
 		string result = input;
-		foreach (var replacement in _replacements)
+		var orderByDescending = _replacements.OrderByDescending(r => LexicalInfoToOffset(r.start, input)).ToArray();
+		foreach (var replacement in orderByDescending)
 		{
 			var startOffset = LexicalInfoToOffset(replacement.start, input);
 			var endOffset = startOffset + replacement.length;

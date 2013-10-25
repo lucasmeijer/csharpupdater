@@ -26,29 +26,3 @@ class DepricatedComponentPropertyGetterReplacer : ReplacingAstVisitor
 		_replacementCollector.Add(node.LexicalInfo,length, "GetComponent.<"+match.Item2+">()");
 	}
 }
-
-
-class DepricatedComponentPropertyGetterReplacerTests : BooUpdaterTestBase
-{
-	[Test]
-	public void WillReplaceInIdentifierForm()
-	{
-		var i = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    rigidbody.mass = 10f";
-		var e = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    GetComponent.<Unity.Runtime.Physics.RigidBody>().mass = 10f";
-		Test(e, i);
-	}
-
-	[Test]
-	public void WillReplaceWithSelfPrefix()
-	{
-		var i = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    self.rigidbody.mass = 10f";
-		var e = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    self.GetComponent.<Unity.Runtime.Physics.RigidBody>().mass = 10f";
-		Test(e, i);
-	}
-
-
-	protected override IEnumerable<DepthFirstVisitor> PipeLineForTest(ReplacementCollector collector)
-	{
-		yield return new DepricatedComponentPropertyGetterReplacer(collector);
-	}
-}

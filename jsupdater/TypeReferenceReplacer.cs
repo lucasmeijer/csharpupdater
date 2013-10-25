@@ -11,12 +11,15 @@ class TypeReferenceReplacer : ReplacingAstVisitor
 	public override void OnSimpleTypeReference(SimpleTypeReference node)
 	{
 		base.OnSimpleTypeReference(node);
+
+		if (node.Entity == null)
+			return;
+
 		if (node.Entity.FullName != "UnityEngine.GameObject")
 			return;
 		_replacementCollector.Add(node.LexicalInfo, node.OriginalName.Length, "Unity.Runtime.Core.SceneObject");
 	}
 }
-
 
 [TestFixture]
 internal class TypeReferenceReplacerTests : BooUpdaterTestBase

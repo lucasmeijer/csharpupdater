@@ -63,9 +63,9 @@ public class BooUpdater : IScriptUpdater
 
 	private IEnumerable<DepthFirstVisitor> UpdatingPipeline(ReplacementCollector collector)
 	{
+		yield return new PropertyUpperCaser(collector);
 		yield return new DepricatedComponentPropertyGetterReplacer(collector);
 		yield return new MemberReferenceReplacer(collector);
-		yield return new PropertyUpperCaser(collector);
 		yield return new TypeReferenceReplacer(collector);
 	}
 }
