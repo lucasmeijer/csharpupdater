@@ -10,13 +10,8 @@ using Boo.Lang.Compiler.TypeSystem;
 
 public class BooUpdater : IScriptUpdater
 {
-	public class MyUnityScriptCompiler : BooCompiler
-	{
-		public Boo.Lang.Compiler.CompilerContext MyRun()
-		{
-			return Run();
-		}
-	}
+	protected BooCompiler _compiler;
+	protected const string OldUnityEngineLocation = "C:\\Program Files (x86)\\Unity\\Editor\\Data\\PlaybackEngines\\windowsstandaloneplayer\\Managed\\UnityEngine.dll";
 
 	public string Update(string input)
 	{
@@ -25,29 +20,15 @@ public class BooUpdater : IScriptUpdater
 
 	internal string Update(string input, Func<ReplacementCollector, IEnumerable<DepthFirstVisitor>> updatingPipeline)
 	{
-		var compiler = new MyUnityScriptCompiler();
-		//compiler.Parameters.Pipeline = UnityScriptCompiler.Pipelines.CompileToBoo();
-		compiler.Parameters.Pipeline = new Boo.Lang.Compiler.Pipelines.ResolveExpressions();
-		compiler.Parameters.Input.Add(new StringInput("main.js", input));
-		compiler.Parameters.GenerateInMemory = true;
-		//compiler.Parameters.ScriptMainMethod = "MyMain";
+		_compiler = CreateCompiler();
+		SetupCompilerParameters();
+		SetupCompilerPipeline();
+		_compiler.Parameters.Input.Add(new StringInput("main.js", input));
 
-		const string unityengine = "C:\\Program Files (x86)\\Unity\\Editor\\Data\\PlaybackEngines\\windowsstandaloneplayer\\Managed\\UnityEngine.dll";
-		var assembly = Assembly.LoadFrom(unityengine);
-		var monobehaviour = assembly.GetType("UnityEngine.MonoBehaviour");
-		if (monobehaviour == null)
-			throw new Exception();
+		var result = _compiler.Run();
 
-		//compiler.Parameters.Pipeline.BeforeStep += PipelineOnBeforeStep;
-
-		compiler.Parameters.References.Add(assembly);
-		//compiler.Parameters.ScriptBaseType = monobehaviour;
-		var result = compiler.MyRun();
-
-		
 		//if (result.Errors.Any())
 		//	throw new Exception("Compile error:"+result.Errors.First());
-
 
 		if (updatingPipeline == null)
 			updatingPipeline = UpdatingPipeline;
@@ -59,6 +40,27 @@ public class BooUpdater : IScriptUpdater
 
 		return collector.ApplyOn(input);
 
+	}
+
+	protected virtual void SetupCompilerPipeline()
+	{
+		_compiler.Parameters.Pipeline = new Boo.Lang.Compiler.Pipelines.ResolveExpressions();
+	}
+
+	protected virtual void SetupCompilerParameters()
+	{
+		_compiler.Parameters.GenerateInMemory = true;
+		_compiler.Parameters.References.Add(OldUnityEngineAssembly());
+	}
+
+	protected Assembly OldUnityEngineAssembly()
+	{
+		return Assembly.LoadFrom(OldUnityEngineLocation);
+	}
+
+	protected virtual BooCompiler CreateCompiler()
+	{
+		return new BooCompiler();
 	}
 
 	private IEnumerable<DepthFirstVisitor> UpdatingPipeline(ReplacementCollector collector)

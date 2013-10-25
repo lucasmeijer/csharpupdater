@@ -18,6 +18,12 @@ namespace IntegrationTests
 			Test(new BooUpdater(), Boo);
 		}
 
+		[Test]
+		public void TestJavascript()
+		{
+			Test(new JavascriptUpdater(), Javascript);
+		}
+
 		private void Test(IScriptUpdater updater, GetTestData getTestData)
 		{
 			string input;
@@ -30,5 +36,6 @@ namespace IntegrationTests
 
 		protected abstract void CSharp(out string i , out string e );
 		protected abstract void Boo(out string i, out string e);
+		protected abstract void Javascript(out string i, out string e);
 	}
 }

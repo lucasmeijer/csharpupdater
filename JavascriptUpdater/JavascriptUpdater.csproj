@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{85ADF73C-0146-4D31-82BE-A00D20A2530E}</ProjectGuid>
+    <ProjectGuid>{515A08AE-8AF8-416C-ACD1-6F821E8BA80C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IntegrationTests</RootNamespace>
-    <AssemblyName>IntegrationTests</AssemblyName>
+    <RootNamespace>JavascriptUpdater</RootNamespace>
+    <AssemblyName>JavascriptUpdater</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,10 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Boo.Lang.Useful">
-      <HintPath>..\JavascriptUpdater\lib\Boo.Lang.Useful.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+      <HintPath>lib\Boo.Lang.Useful.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -43,26 +40,25 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnityScript">
+      <HintPath>lib\UnityScript.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityScript.Lang">
+      <HintPath>lib\UnityScript.Lang.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DepricatedComponentGetterReplacerTests.cs" />
-    <Compile Include="MemberReferenceReplacerTests.cs" />
-    <Compile Include="PropretyUpperCaserTests.cs" />
-    <Compile Include="IntegrationTest.cs" />
+    <Compile Include="UnityScriptUpdater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\boo\src\Boo.Lang.Parser\Boo.Lang.Parser.csproj">
-      <Project>{ba0306b9-a10b-4d29-b219-0dfbe24741e8}</Project>
-      <Name>Boo.Lang.Parser</Name>
+    <ProjectReference Include="..\..\..\..\..\..\..\boo\src\Boo.Lang.Compiler\Boo.Lang.Compiler.csproj">
+      <Project>{7eac855c-ab70-4ceb-9b9a-8b60712277e2}</Project>
+      <Name>Boo.Lang.Compiler</Name>
     </ProjectReference>
-    <ProjectReference Include="..\csharpupdater\csharpupdater.csproj">
-      <Project>{8ba01b8b-6d06-4bac-8080-94c0180e05de}</Project>
-      <Name>csharpupdater</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\JavascriptUpdater\JavascriptUpdater.csproj">
-      <Project>{515a08ae-8af8-416c-acd1-6f821e8ba80c}</Project>
-      <Name>JavascriptUpdater</Name>
+    <ProjectReference Include="..\..\..\..\..\..\..\boo\src\Boo.Lang\Boo.Lang.csproj">
+      <Project>{a359e52e-5e90-40f3-a5f0-257fe2d545ee}</Project>
+      <Name>Boo.Lang</Name>
     </ProjectReference>
     <ProjectReference Include="..\jsupdater\BooUpdater.csproj">
       <Project>{8c551102-3a16-4599-94bc-92f8f832bb83}</Project>
@@ -72,9 +68,6 @@
       <Project>{EE5E64A9-BEB3-4CF0-9ECD-4F3CF24ABC60}</Project>
       <Name>ScriptUpdating</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

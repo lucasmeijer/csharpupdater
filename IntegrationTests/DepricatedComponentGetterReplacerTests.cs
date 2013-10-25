@@ -20,6 +20,12 @@ namespace IntegrationTests.DepricatedComponentGetterReplacerTests
 			i = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    rigidbody.mass = 10f";
 			e = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    GetComponent.<Unity.Runtime.Physics.RigidBody>().Mass = 10f";
 		}
+
+		protected override void Javascript(out string i, out string e)
+		{
+			i = "function S() { rigidbody.mass = 10f; }";
+			e = "function S() { GetComponent.<Unity.Runtime.Physics.RigidBody>().Mass = 10f; }";
+		}
 	}
 
 	class WillReplaceWithSelfPrefix : IntegrationTest
@@ -35,6 +41,12 @@ namespace IntegrationTests.DepricatedComponentGetterReplacerTests
 			i = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    self.rigidbody.mass = 10f";
 			e = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    self.GetComponent.<Unity.Runtime.Physics.RigidBody>().Mass = 10f";
 		}
+
+		protected override void Javascript(out string i, out string e)
+		{
+			i = "function S() { this.rigidbody.mass = 10f; }";
+			e = "function S() { this.GetComponent.<Unity.Runtime.Physics.RigidBody>().Mass = 10f; }";
+		}
 	}
 
 	class WillNotModifySomethingCalledMonoBehaviourButThatIsNotOurMonoBehaviour : IntegrationTest
@@ -49,9 +61,12 @@ namespace IntegrationTests.DepricatedComponentGetterReplacerTests
 		{
 			i = e = "class C(MonoBehaviour):\n  def S():\n    rigidbody.mass = 10f";
 		}
+
+		protected override void Javascript(out string i, out string e)
+		{
+			i = e = "class C : MonoBehaviour { function S() { rigidbody.mass = 10f; } }";
+		}
 	}
-
-
 
 	internal class WillNotModifyLocalVariableCalledRigidBody : IntegrationTest
 	{
@@ -63,6 +78,11 @@ namespace IntegrationTests.DepricatedComponentGetterReplacerTests
 		protected override void Boo(out string i, out string e)
 		{
 			i = e = "class C(UnityEngine.MonoBehaviour):\n  def S():\n    rigidbody as int = 0\n    rigidbody = 1; } }";
+		}
+
+		protected override void Javascript(out string i, out string e)
+		{
+			i = e = "function S() { var rigidbody:int = 0; rigidbody = 1; } }";
 		}
 	}
 

@@ -8,3 +8,5 @@ csharpupdater.sln.DotSettings.user
 csharpupdater.v11.suo
 IntegrationTests/bin/
 IntegrationTests/obj/
+JavascriptUpdater/bin/
+JavascriptUpdater/obj/
