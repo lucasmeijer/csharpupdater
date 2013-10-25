@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Boo.Lang.Compiler.Ast;
 using Boo.Lang.Compiler.TypeSystem;
 using NUnit.Framework;
@@ -14,15 +10,6 @@ class DepricatedComponentPropertyGetterReplacer : ReplacingAstVisitor
 	{
 	}
 
-	IEnumerable<Tuple<string, string>> PropertiesToReplace()
-	{
-		yield return new Tuple<string, string>("rigidbody", "Unity.Runtime.Physics.RigidBody");
-		yield return new Tuple<string, string>("collider", "Unity.Runtime.Physics.Collider");
-		yield return new Tuple<string, string>("constantForce", "Unity.Runtime.Physics.ConstantForce");
-		yield return new Tuple<string, string>("camera", "Unity.Runtime.Rendering.Camera");
-		yield return new Tuple<string, string>("animation", "Unity.Runtime.DepricatedAnimation.Animation");
-	}
-
 	public override void OnMemberReferenceExpression(MemberReferenceExpression node)
 	{
 		base.OnMemberReferenceExpression(node);
@@ -30,10 +17,7 @@ class DepricatedComponentPropertyGetterReplacer : ReplacingAstVisitor
 		if (externalProperty == null)
 			return;
 
-		if (externalProperty.DeclaringType.FullName != "UnityEngine.Component")
-			return;
-
-		var match = PropertiesToReplace().SingleOrDefault(p => p.Item1 == externalProperty.Name);
+		var match = DepricatedComponentPropertyGetterReplacerKnowledge.PropertiesToReplace().SingleOrDefault(p => p.Item1 == externalProperty.FullName);
 		if (match == null)
 			return;
 

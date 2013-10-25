@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boo.Lang.Compiler", "..\..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boo.Lang.Parser", "..\..\..\..\..\..\boo\src\Boo.Lang.Parser\Boo.Lang.Parser.csproj", "{BA0306B9-A10B-4D29-B219-0DFBE24741E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptUpdating", "ScriptUpdating\ScriptUpdating.csproj", "{EE5E64A9-BEB3-4CF0-9ECD-4F3CF24ABC60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug Net-1.1|Any CPU = Debug Net-1.1|Any CPU
@@ -70,6 +72,16 @@ Global
 		{BA0306B9-A10B-4D29-B219-0DFBE24741E8}.Micro-Release|Any CPU.Build.0 = Micro-Release|Any CPU
 		{BA0306B9-A10B-4D29-B219-0DFBE24741E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA0306B9-A10B-4D29-B219-0DFBE24741E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE5E64A9-BEB3-4CF0-9ECD-4F3CF24ABC60}.Debug Net-1.1|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE5E64A9-BEB3-4CF0-9ECD-4F3CF24ABC60}.Debug Net-1.1|Any CPU.Build.0 = Debug|Any CPU
+		{EE5E64A9-BEB3-4CF0-9ECD-4F3CF24ABC60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE5E64A9-BEB3-4CF0-9ECD-4F3CF24ABC60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE5E64A9-BEB3-4CF0-9ECD-4F3CF24ABC60}.Micro-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE5E64A9-BEB3-4CF0-9ECD-4F3CF24ABC60}.Micro-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE5E64A9-BEB3-4CF0-9ECD-4F3CF24ABC60}.Micro-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE5E64A9-BEB3-4CF0-9ECD-4F3CF24ABC60}.Micro-Release|Any CPU.Build.0 = Release|Any CPU
+		{EE5E64A9-BEB3-4CF0-9ECD-4F3CF24ABC60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE5E64A9-BEB3-4CF0-9ECD-4F3CF24ABC60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

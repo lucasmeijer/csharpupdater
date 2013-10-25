@@ -106,7 +106,7 @@ class StringBasedGetComponentReplacerTests : CSharpUpdaterTestsBase
 		AssertIsNotModified("using UnityEngine; class L : MonoBehaviour { void Start() { var s = \"Light\"; GetComponent(s); } } ");
 	}
 
-	protected override IEnumerable<ReplacingAstVisitor> GetPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
+	protected override IEnumerable<ReplacingAstVisitor> PipelineForTest(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
 	{
 		yield return new StringBasedGetComponentReplacer(replacementCollector, resolver);
 	}

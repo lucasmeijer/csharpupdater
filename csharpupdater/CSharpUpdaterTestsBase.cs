@@ -14,11 +14,10 @@ namespace csharpupdater
 		protected void Test(string expected, string input)
 		{
 			var updater = new CSharpUpdater();
-			var output = updater.Update(input, GetPipeline);
-			Assert.AreEqual(
-				expected, output);
+			var output = updater.Update(input, PipelineForTest);
+			Assert.AreEqual(expected, output);
 		}
 
-		protected abstract IEnumerable<ReplacingAstVisitor> GetPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver);
+		protected abstract IEnumerable<ReplacingAstVisitor> PipelineForTest(ReplacementCollector replacementCollector, CSharpAstResolver resolver);
 	}
 }

@@ -55,7 +55,7 @@ namespace csharpupdater
 			Test(e, i);
 		}
 
-		protected override IEnumerable<ReplacingAstVisitor> GetPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
+		protected override IEnumerable<ReplacingAstVisitor> PipelineForTest(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
 		{
 			yield return new TypeReferenceReplacer(replacementCollector,resolver);
 		}

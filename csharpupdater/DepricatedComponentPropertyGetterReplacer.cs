@@ -1,26 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using ICSharpCode.NRefactory;
+﻿using System.Linq;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
-using ICSharpCode.NRefactory.Semantics;
-using ICSharpCode.NRefactory.TypeSystem;
 
 internal class DepricatedComponentPropertyGetterReplacer : ReplacingAstVisitor
 {
 	public DepricatedComponentPropertyGetterReplacer(ReplacementCollector replacementCollector, CSharpAstResolver resolver) : base(replacementCollector, resolver)
 	{
-	}
-
-	IEnumerable<Tuple<string, string>> PropertiesToReplace()
-	{
-		yield return new Tuple<string, string>("rigidbody","Unity.Runtime.Physics.RigidBody");
-		yield return new Tuple<string, string>("collider", "Unity.Runtime.Physics.Collider");
-		yield return new Tuple<string, string>("constantForce", "Unity.Runtime.Physics.ConstantForce");
-		yield return new Tuple<string, string>("camera", "Unity.Runtime.Rendering.Camera");
-		yield return new Tuple<string, string>("animation", "Unity.Runtime.DepricatedAnimation.Animation");
 	}
 
 	public override void VisitIdentifierExpression(IdentifierExpression identifierExpression)
@@ -37,7 +22,7 @@ internal class DepricatedComponentPropertyGetterReplacer : ReplacingAstVisitor
 
 	private void ReplacePropertyReferenceIfRequired(AstNode thingThatShouldResolveToProperty, AstNode expressionToReplace)
 	{
-		var match = PropertiesToReplace().SingleOrDefault(p => IsMemberReferenceTo(thingThatShouldResolveToProperty, "UnityEngine.Component."+p.Item1));
+		var match = DepricatedComponentPropertyGetterReplacerKnowledge.PropertiesToReplace().SingleOrDefault(p => IsMemberReferenceTo(thingThatShouldResolveToProperty, p.Item1));
 		if (match == null)
 			return;
 		
