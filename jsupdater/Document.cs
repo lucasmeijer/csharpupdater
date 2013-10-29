@@ -19,10 +19,20 @@ internal class Document
 			if (info.Line == linecount && info.Column == charcount)
 				return offsetCounter;
 
-			if (_text[offsetCounter] == '\n')
+			var c = _text[offsetCounter];
+			
+			if (c == "\u000A"[0])
 			{
 				linecount++;
 				charcount = 1;
+			} else if (c == "\u000D"[0])
+			{
+			}
+			
+			else if (c == '\t')
+			{
+				charcount++;
+				while (charcount%8 != 1) charcount++;
 			}
 			else
 			{
