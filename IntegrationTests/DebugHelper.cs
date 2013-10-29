@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using ScriptUpdating;
 
 namespace IntegrationTests
 {
@@ -10,9 +11,8 @@ namespace IntegrationTests
 		[Test]
 		public void Test()
 		{
-			var input = System.IO.File.ReadAllText("C:\\Users\\Public\\Documents\\Unity Projects\\4-0_AngryBots\\Assets\\Scripts\\AI\\MechAttackMoveController.js");
 			var booupdater = new JavascriptUpdater.JavascriptUpdater();
-			Console.WriteLine(booupdater.UpdateSmall(input));
+			Console.WriteLine(booupdater.UpdateSmall(new[] {SourceFile.For("C:\\Users\\Public\\Documents\\Unity Projects\\4-0_AngryBots\\Assets\\Scripts\\AI\\MechAttackMoveController.js")}));
 		}
 	}
 }

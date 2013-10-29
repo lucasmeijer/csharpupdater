@@ -32,7 +32,7 @@ namespace IntegrationTests
 			string expected;
 			getTestData(out input, out expected);
 
-			var output = updater.Update(input);
+			var output = updater.Update(new [] { new SourceFile() { Contents = input, FileName = "bla.bs"}});
 			Assert.AreEqual(expected, output);
 		}
 

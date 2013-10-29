@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace ScriptUpdating
 {
@@ -10,5 +6,10 @@ namespace ScriptUpdating
 	{
 		public string FileName;
 		public string Contents;
+
+		public static SourceFile For(string file)
+		{
+			return new SourceFile() {FileName = file, Contents = File.ReadAllText(file)};
+		}
 	}
 }

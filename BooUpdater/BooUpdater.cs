@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Boo.Lang.Compiler;
 using Boo.Lang.Compiler.Ast;
@@ -13,22 +14,23 @@ namespace BooUpdater
 		protected BooCompiler _compiler;
 		protected const string OldUnityEngineLocation = "C:\\Program Files (x86)\\Unity\\Editor\\Data\\PlaybackEngines\\windowsstandaloneplayer\\Managed\\UnityEngine.dll";
 
-		public string Update(string input)
+		public string Update(IEnumerable<SourceFile> input)
 		{
 			return Update(input, null);
 		}
 
-		public string UpdateSmall(string input)
+		public string UpdateSmall(IEnumerable<SourceFile> input)
 		{
 			return Update(input,SmallPipeline);
 		}
 
-		internal string Update(string input, Func<ReplacementCollector, Document, IEnumerable<DepthFirstVisitor>> updatingPipeline)
+		internal string Update(IEnumerable<SourceFile> inputs, Func<ReplacementCollector, Document, IEnumerable<DepthFirstVisitor>> updatingPipeline)
 		{
 			_compiler = CreateCompiler();
 			SetupCompilerParameters();
 			SetupCompilerPipeline();
-			_compiler.Parameters.Input.Add(new StringInput("main.js", input));
+			foreach(var input in inputs)
+				_compiler.Parameters.Input.Add(new StringInput(input.FileName, input.Contents));
 
 			var result = _compiler.Run();
 
@@ -37,15 +39,19 @@ namespace BooUpdater
 
 			if (updatingPipeline == null)
 				updatingPipeline = UpdatingPipeline;
-			var document = new Document(input);
-			var collector = new ReplacementCollector(document);
-			foreach (DepthFirstVisitor step in updatingPipeline(collector,document))
+
+			foreach (var input in inputs)
 			{
-				step.Visit(result.CompileUnit);
+				var document = new Document(input.Contents);
+				var collector = new ReplacementCollector(document);
+				foreach (DepthFirstVisitor step in updatingPipeline(collector, document))
+				{
+					step.Visit(result.CompileUnit);
+				}
+				input.Contents = collector.ApplyOn(input.Contents);
 			}
 
-			return collector.ApplyOn(input);
-
+			return inputs.Single().Contents;
 		}
 
 		protected virtual void SetupCompilerPipeline()

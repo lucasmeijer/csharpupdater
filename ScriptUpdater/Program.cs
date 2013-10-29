@@ -19,7 +19,7 @@ namespace ScriptUpdater
 				Console.WriteLine("Processing: "+file);
 				try
 				{
-					var output = updater.UpdateSmall(File.ReadAllText(file));
+					var output = updater.UpdateSmall(new [] { SourceFile.For(file)});
 					File.WriteAllText(file, output);
 				}
 				catch (Exception e)

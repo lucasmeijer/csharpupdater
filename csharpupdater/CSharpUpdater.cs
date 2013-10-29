@@ -13,12 +13,12 @@ namespace CSharpUpdater
 {
 	public class CSharpUpdater : IScriptUpdater
 	{
-		public string Update(string input)
+		public string Update(IEnumerable<SourceFile> input)
 		{
 			return Update(input, null);
 		}
 
-		public string UpdateSmall(string input)
+		public string UpdateSmall(IEnumerable<SourceFile> input)
 		{
 			return Update(input, SmallPipeline);
 		}
@@ -33,20 +33,21 @@ namespace CSharpUpdater
 
 		internal string Update(string input, Func<ReplacementCollector, CSharpAstResolver,IEnumerable<ReplacingAstVisitor>> pipeLineProvider)
 		{
-			IProjectContent project = new CSharpProjectContent();
-			var cecilLoader = new CecilLoader { LazyLoad = true };
-			var assembly = cecilLoader.LoadAssemblyFile("C:/Program Files (x86)/Unity/Editor/Data/PlaybackEngines/windowsstandaloneplayer/Managed/UnityEngine.dll");
-			project = project.AddAssemblyReferences(assembly);
-			project.AddAssemblyReferences(new CecilLoader().LoadAssemblyFile(typeof(object).Assembly.Location));
+			return Update(new [] { new SourceFile()
+			                       {
+				                       Contents = input, 
+				                       FileName = "bla.cs"
+			                       }}, pipeLineProvider);
+		}
 
-			var sourceFilesData = SourceFilesDataFor(input);
-
-			project = AddSourceFilesToProject(sourceFilesData, project);
+		private string Update(IEnumerable<SourceFile> sourceFiles, Func<ReplacementCollector, CSharpAstResolver, IEnumerable<ReplacingAstVisitor>> pipeLineProvider)
+		{
+			var sourceFilesData = SourceFilesDataFor(sourceFiles);
 
 			if (pipeLineProvider == null)
 				pipeLineProvider = BuildPipeline;
 
-			var compilation = project.CreateCompilation();
+			var compilation = SetupCSharpProjectContentFor(sourceFilesData).CreateCompilation();
 
 			foreach (var sourceFileData in sourceFilesData)
 			{
@@ -62,6 +63,17 @@ namespace CSharpUpdater
 			return sourceFilesData.Single().SourceFile.Contents;
 		}
 
+		private static IProjectContent SetupCSharpProjectContentFor(IEnumerable<SourceFileData> sourceFilesData)
+		{
+			IProjectContent project = new CSharpProjectContent();
+			var cecilLoader = new CecilLoader {LazyLoad = true};
+			var assembly = cecilLoader.LoadAssemblyFile(					"C:/Program Files (x86)/Unity/Editor/Data/PlaybackEngines/windowsstandaloneplayer/Managed/UnityEngine.dll");
+			project = project.AddAssemblyReferences(assembly);
+			project.AddAssemblyReferences(new CecilLoader().LoadAssemblyFile(typeof (object).Assembly.Location));
+			project = AddSourceFilesToProject(sourceFilesData, project);
+			return project;
+		}
+
 		private static IProjectContent AddSourceFilesToProject(IEnumerable<SourceFileData> sourceFilesData, IProjectContent project)
 		{
 			foreach (var sourceFileData in sourceFilesData)
@@ -70,15 +82,13 @@ namespace CSharpUpdater
 			return project;
 		}
 
-		private static List<SourceFileData> SourceFilesDataFor(string input)
+		private static List<SourceFileData> SourceFilesDataFor(IEnumerable<SourceFile> sourceFiles)
 		{
 			var sourceFilesData = new List<SourceFileData>();
 
-			var sourceFiles = new List<SourceFile>() {new SourceFile() {Contents = input, FileName = "bla.cs"}};
-
 			foreach (var sourceFile in sourceFiles)
 			{
-				var doc = new ReadOnlyDocument(input);
+				var doc = new ReadOnlyDocument(sourceFile.Contents);
 				var syntaxTree = new CSharpParser().Parse(doc, sourceFile.FileName);
 				var unresolvedFile = syntaxTree.ToTypeSystem();
 				sourceFilesData.Add(new SourceFileData()
