@@ -30,6 +30,7 @@ public class JavascriptUpdater : BooUpdater
 
 		var parameters = (UnityScriptCompilerParameters) _compiler.Parameters;
 		parameters.ScriptMainMethod = "MyMain";
+		parameters.Imports = new Boo.Lang.List<String>() { "UnityEngine"};
 			
 		var monobehaviour = OldUnityEngineAssembly().GetType("UnityEngine.MonoBehaviour");
 		if (monobehaviour == null)

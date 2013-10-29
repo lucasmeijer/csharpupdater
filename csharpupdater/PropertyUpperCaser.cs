@@ -4,8 +4,11 @@ using ICSharpCode.NRefactory.TypeSystem.Implementation;
 
 internal class PropertyUpperCaser : ReplacingAstVisitor
 {
-	public PropertyUpperCaser(ReplacementCollector replacementCollector, CSharpAstResolver resolver) : base(replacementCollector,resolver)
+	private readonly bool _onlyTransform;
+
+	public PropertyUpperCaser(ReplacementCollector replacementCollector, CSharpAstResolver resolver, bool onlyTransform=false) : base(replacementCollector,resolver)
 	{
+		_onlyTransform = onlyTransform;
 	}
 
 	public override void VisitMemberReferenceExpression(MemberReferenceExpression memberReferenceExpression)
@@ -27,6 +30,9 @@ internal class PropertyUpperCaser : ReplacingAstVisitor
 			return;
 
 		if (property.ParentAssembly.AssemblyName != "UnityEngine")
+			return;
+
+		if (_onlyTransform && property.Name != "transform")
 			return;
 
 		if (char.IsLower(property.Name[0]))

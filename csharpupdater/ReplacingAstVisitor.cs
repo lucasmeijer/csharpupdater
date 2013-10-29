@@ -3,7 +3,7 @@ using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 
-internal class ReplacingAstVisitor : DepthFirstAstVisitor
+public class ReplacingAstVisitor : DepthFirstAstVisitor
 {
 	protected CSharpAstResolver _resolver;
 	protected ReplacementCollector _replacementCollector;

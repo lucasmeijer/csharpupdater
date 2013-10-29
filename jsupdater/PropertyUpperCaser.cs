@@ -9,8 +9,11 @@ using NUnit.Framework;
 
 class PropertyUpperCaser : ReplacingAstVisitor
 {
-	public PropertyUpperCaser(ReplacementCollector replacementCollector, Document document) : base(replacementCollector, document)
+	private readonly bool _onlyTransform;
+
+	public PropertyUpperCaser(ReplacementCollector replacementCollector, Document document, bool onlyTransform=false) : base(replacementCollector, document)
 	{
+		_onlyTransform = onlyTransform;
 	}
 
 	public override void OnMemberReferenceExpression(MemberReferenceExpression node)
@@ -24,6 +27,12 @@ class PropertyUpperCaser : ReplacingAstVisitor
 		var declaringType = propertyInfo.DeclaringType;
 		var assembly = declaringType.Assembly;
 		var assemblyName = assembly.GetName();
+		if (_onlyTransform && externalProperty.Name != "transform")
+			return;
+
+		if (DepricatedComponentPropertyGetterReplacerKnowledge.PropertiesToReplace().Any(p => p.Item1 == externalProperty.FullName))
+			return;
+
 		if (assemblyName.Name == "UnityEngine")
 			_replacementCollector.Add(node.LexicalInfo,node.Name.Length,UpperCaseFirstChar(node.Name));
 	}

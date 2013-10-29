@@ -45,4 +45,26 @@ namespace IntegrationTests.PropertyUpperCaserTests
 			e = "function S() { var mb:UnityEngine.MonoBehaviour; Debug.Log(mb.Tag); }";
 		}
 	}
+
+	[TestFixture]
+	public class InMemberReferenceExpression : IntegrationTest
+	{
+		protected override void CSharp(out string i, out string e)
+		{
+			i = "class C : UnityEngine.MonoBehaviour { void Start() { string a = transform.name; } }";
+			e = "class C : UnityEngine.MonoBehaviour { void Start() { string a = Transform.Name; } }";
+		}
+
+		protected override void Boo(out string i, out string e)
+		{
+			i = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    a as string = self.transform.name";
+			e = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    a as string = self.Transform.Name";
+		}
+
+		protected override void Javascript(out string i, out string e)
+		{
+			i = "function S() { var a = this.transform.name; }";
+			e = "function S() { var a = this.Transform.Name; }";
+		}
+	}
 }

@@ -4,7 +4,7 @@ using ICSharpCode.NRefactory;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Editor;
 
-internal class ReplacementCollector
+public class ReplacementCollector
 {
 	struct Replacement
 	{

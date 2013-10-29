@@ -18,6 +18,11 @@ public class BooUpdater : IScriptUpdater
 		return Update(input, null);
 	}
 
+	public string UpdateSmall(string input)
+	{
+		return Update(input,SmallPipeline);
+	}
+
 	internal string Update(string input, Func<ReplacementCollector, Document, IEnumerable<DepthFirstVisitor>> updatingPipeline)
 	{
 		_compiler = CreateCompiler();
@@ -72,4 +77,10 @@ public class BooUpdater : IScriptUpdater
 		yield return new TypeReferenceReplacer(collector,document);
 		yield return new StringBasedGetComponentReplacer(collector,document);
 	}
+
+	private IEnumerable<DepthFirstVisitor> SmallPipeline(ReplacementCollector collector, Document document)
+	{
+		yield return new PropertyUpperCaser(collector, document,true);
+	}
+
 }

@@ -12,6 +12,11 @@ public class CSharpUpdater : IScriptUpdater
 		return Update(input, null);
 	}
 
+	public string UpdateSmall(string input)
+	{
+		return Update(input, SmallPipeline);
+	}
+
 	internal string Update(string input, Func<ReplacementCollector, CSharpAstResolver,IEnumerable<ReplacingAstVisitor>> pipeLineProvider)
 	{
 		var parser = new CSharpParser();
@@ -46,5 +51,10 @@ public class CSharpUpdater : IScriptUpdater
 		yield return new DepricatedComponentPropertyGetterReplacer(replacementCollector, resolver);
 		yield return new PropertyUpperCaser(replacementCollector, resolver);
 		yield return new StringBasedGetComponentReplacer(replacementCollector,resolver);
+	}
+
+	private IEnumerable<ReplacingAstVisitor> SmallPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
+	{
+		yield return new PropertyUpperCaser(replacementCollector, resolver, true);
 	}
 }

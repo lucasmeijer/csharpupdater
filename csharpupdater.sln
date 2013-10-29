@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "Integra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JavascriptUpdater", "JavascriptUpdater\JavascriptUpdater.csproj", "{515A08AE-8AF8-416C-ACD1-6F821E8BA80C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptUpdater", "ScriptUpdater\ScriptUpdater.csproj", "{BBCC36C1-CF64-403B-8D53-9642AFBB6A23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug Net-1.1|Any CPU = Debug Net-1.1|Any CPU
@@ -106,6 +108,16 @@ Global
 		{515A08AE-8AF8-416C-ACD1-6F821E8BA80C}.Micro-Release|Any CPU.Build.0 = Release|Any CPU
 		{515A08AE-8AF8-416C-ACD1-6F821E8BA80C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{515A08AE-8AF8-416C-ACD1-6F821E8BA80C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBCC36C1-CF64-403B-8D53-9642AFBB6A23}.Debug Net-1.1|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBCC36C1-CF64-403B-8D53-9642AFBB6A23}.Debug Net-1.1|Any CPU.Build.0 = Debug|Any CPU
+		{BBCC36C1-CF64-403B-8D53-9642AFBB6A23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBCC36C1-CF64-403B-8D53-9642AFBB6A23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBCC36C1-CF64-403B-8D53-9642AFBB6A23}.Micro-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBCC36C1-CF64-403B-8D53-9642AFBB6A23}.Micro-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBCC36C1-CF64-403B-8D53-9642AFBB6A23}.Micro-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBCC36C1-CF64-403B-8D53-9642AFBB6A23}.Micro-Release|Any CPU.Build.0 = Release|Any CPU
+		{BBCC36C1-CF64-403B-8D53-9642AFBB6A23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBCC36C1-CF64-403B-8D53-9642AFBB6A23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
