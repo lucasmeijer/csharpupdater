@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
+using ScriptUpdating;
 
 namespace CSharpUpdater
 {

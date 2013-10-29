@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Boo.Lang.Compiler.Ast;
 using Boo.Lang.Compiler.TypeSystem;
+using ScriptUpdating;
 
 namespace BooUpdater
 {

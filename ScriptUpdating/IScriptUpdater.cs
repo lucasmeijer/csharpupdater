@@ -1,5 +1,8 @@
-﻿public interface IScriptUpdater
+﻿namespace ScriptUpdating
 {
-	string Update(string input);
-	string UpdateSmall(string input);
+	public interface IScriptUpdater
+	{
+		string Update(string input);
+		string UpdateSmall(string input);
+	}
 }

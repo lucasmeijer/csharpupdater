@@ -4,6 +4,7 @@ using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Editor;
 using ICSharpCode.NRefactory.TypeSystem;
+using ScriptUpdating;
 
 namespace CSharpUpdater
 {
