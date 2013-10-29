@@ -45,5 +45,6 @@ public class CSharpUpdater : IScriptUpdater
 		yield return new TypeReferenceReplacer(replacementCollector, resolver);
 		yield return new DepricatedComponentPropertyGetterReplacer(replacementCollector, resolver);
 		yield return new PropertyUpperCaser(replacementCollector, resolver);
+		yield return new StringBasedGetComponentReplacer(replacementCollector,resolver);
 	}
 }

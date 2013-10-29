@@ -12,7 +12,14 @@ internal class ReplacementCollector
 		public string replacementstring;
 	}
 
+	private Document _document;
+
 	private List<Replacement> _replacements = new List<Replacement>();
+
+	public ReplacementCollector(Document document)
+	{
+		_document = document;
+	}
 
 	public void Add(LexicalInfo lexicalInfo, int length, string replacementstring)
 	{
@@ -22,38 +29,14 @@ internal class ReplacementCollector
 	public string ApplyOn(string input)
 	{
 		string result = input;
-		var orderByDescending = _replacements.OrderByDescending(r => LexicalInfoToOffset(r.start, input)).ToArray();
+		var orderByDescending = _replacements.OrderByDescending(r => _document.LexicalInfoToOffset(r.start)).ToArray();
 		foreach (var replacement in orderByDescending)
 		{
-			var startOffset = LexicalInfoToOffset(replacement.start, input);
+			var startOffset = _document.LexicalInfoToOffset(replacement.start);
 			var endOffset = startOffset + replacement.length;
 			var tail = endOffset < result.Length ? result.Substring(endOffset) : "";
 			result = result.Substring(0,startOffset) + replacement.replacementstring + tail;
 		}
 		return result;
-	}
-
-	private int LexicalInfoToOffset(LexicalInfo info, string input)
-	{
-		int charcount = 1;
-		int linecount = 1;
-		int offsetCounter = 0;
-		while (true)
-		{
-			if (info.Line == linecount && info.Column == charcount)
-				return offsetCounter;
-
-			if (input[offsetCounter] == '\n')
-			{
-				linecount++;
-				charcount = 1;
-			}
-			else
-			{
-				charcount++;
-			}
-			offsetCounter++;
-		}
-
 	}
 }

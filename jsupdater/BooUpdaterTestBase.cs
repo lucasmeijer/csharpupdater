@@ -11,5 +11,5 @@ internal abstract class BooUpdaterTestBase
 		Assert.AreEqual(expected, output);
 	}
 
-	protected abstract IEnumerable<DepthFirstVisitor> PipeLineForTest(ReplacementCollector collector);
+	protected abstract IEnumerable<DepthFirstVisitor> PipeLineForTest(ReplacementCollector collector, Document document);
 }

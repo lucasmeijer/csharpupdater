@@ -2,8 +2,8 @@
 
 class MemberReferenceReplacer : ReplacingAstVisitor
 {
-	public MemberReferenceReplacer(ReplacementCollector replacementCollector)
-		: base(replacementCollector)
+	public MemberReferenceReplacer(ReplacementCollector replacementCollector, Document document)
+		: base(replacementCollector, document)
 	{
 	}
 

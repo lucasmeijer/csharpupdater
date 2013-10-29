@@ -4,7 +4,7 @@ internal abstract class ReplacingAstVisitor : DepthFirstVisitor
 {
 	protected readonly ReplacementCollector _replacementCollector;
 
-	protected ReplacingAstVisitor(ReplacementCollector replacementCollector)
+	protected ReplacingAstVisitor(ReplacementCollector replacementCollector, Document document)
 	{
 		_replacementCollector = replacementCollector;
 	}

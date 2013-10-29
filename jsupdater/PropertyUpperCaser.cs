@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 class PropertyUpperCaser : ReplacingAstVisitor
 {
-	public PropertyUpperCaser(ReplacementCollector replacementCollector) : base(replacementCollector)
+	public PropertyUpperCaser(ReplacementCollector replacementCollector, Document document) : base(replacementCollector, document)
 	{
 	}
 
@@ -31,31 +31,5 @@ class PropertyUpperCaser : ReplacingAstVisitor
 	private string UpperCaseFirstChar(string name)
 	{
 		return char.ToUpper(name[0]) + name.Substring(1);
-	}
-}
-
-
-[TestFixture]
-internal class PropertyUpperCaserTests : BooUpdaterTestBase
-{
-	[Test]
-	public void PropertyAssignmentInMonoBehaviour()
-	{
-		var i = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    name = name";
-		var e = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    Name = Name";
-		Test(e,i);
-	}
-
-	[Test]
-	public void PropertyAssignmentOutsideMonoBehaviour()
-	{
-		var i = "class C:\n  def Start():\n    mb as UnityEngine.MonoBehaviour\n    print mb.transform.name";
-		var e = "class C:\n  def Start():\n    mb as UnityEngine.MonoBehaviour\n    print mb.Transform.Name";
-		Test(e, i);
-	}
-
-	protected override IEnumerable<DepthFirstVisitor> PipeLineForTest(ReplacementCollector collector)
-	{
-		yield return new PropertyUpperCaser(collector);
 	}
 }

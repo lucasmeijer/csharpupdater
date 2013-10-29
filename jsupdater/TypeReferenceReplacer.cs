@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 class TypeReferenceReplacer : ReplacingAstVisitor
 {
-	public TypeReferenceReplacer(ReplacementCollector replacementCollector) : base(replacementCollector)
+	public TypeReferenceReplacer(ReplacementCollector replacementCollector, Document document) : base(replacementCollector, document)
 	{
 	}
 
@@ -48,8 +48,8 @@ internal class TypeReferenceReplacerTests : BooUpdaterTestBase
 		Test(e, i);
 	}
 	
-	protected override IEnumerable<DepthFirstVisitor> PipeLineForTest(ReplacementCollector collector)
+	protected override IEnumerable<DepthFirstVisitor> PipeLineForTest(ReplacementCollector collector, Document document)
 	{
-		yield return new TypeReferenceReplacer(collector);
+		yield return new TypeReferenceReplacer(collector, document);
 	}
 }

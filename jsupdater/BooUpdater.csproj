@@ -43,11 +43,13 @@
     <Compile Include="BooUpdaterTestBase.cs" />
     <Compile Include="BooUpdater.cs" />
     <Compile Include="DepricatedComponentPropertyGetterReplacer.cs" />
+    <Compile Include="Document.cs" />
     <Compile Include="MemberReferenceReplacer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyUpperCaser.cs" />
     <Compile Include="ReplacementCollector.cs" />
     <Compile Include="ReplacingAstVisitor.cs" />
+    <Compile Include="StringBasedGetComponentReplacer.cs" />
     <Compile Include="TypeReferenceReplacer.cs" />
   </ItemGroup>
   <ItemGroup>

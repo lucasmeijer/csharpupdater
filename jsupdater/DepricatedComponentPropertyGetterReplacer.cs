@@ -4,7 +4,7 @@ using Boo.Lang.Compiler.TypeSystem;
 
 class DepricatedComponentPropertyGetterReplacer : ReplacingAstVisitor
 {
-	public DepricatedComponentPropertyGetterReplacer(ReplacementCollector replacementCollector) : base(replacementCollector)
+	public DepricatedComponentPropertyGetterReplacer(ReplacementCollector replacementCollector, Document document) : base(replacementCollector, document)
 	{
 	}
 

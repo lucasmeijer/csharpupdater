@@ -18,7 +18,7 @@ public class BooUpdater : IScriptUpdater
 		return Update(input, null);
 	}
 
-	internal string Update(string input, Func<ReplacementCollector, IEnumerable<DepthFirstVisitor>> updatingPipeline)
+	internal string Update(string input, Func<ReplacementCollector, Document, IEnumerable<DepthFirstVisitor>> updatingPipeline)
 	{
 		_compiler = CreateCompiler();
 		SetupCompilerParameters();
@@ -32,8 +32,9 @@ public class BooUpdater : IScriptUpdater
 
 		if (updatingPipeline == null)
 			updatingPipeline = UpdatingPipeline;
-		var collector = new ReplacementCollector();
-		foreach (DepthFirstVisitor step in updatingPipeline(collector))
+		var document = new Document(input);
+		var collector = new ReplacementCollector(document);
+		foreach (DepthFirstVisitor step in updatingPipeline(collector,document))
 		{
 			step.Visit(result.CompileUnit);
 		}
@@ -63,11 +64,12 @@ public class BooUpdater : IScriptUpdater
 		return new BooCompiler();
 	}
 
-	private IEnumerable<DepthFirstVisitor> UpdatingPipeline(ReplacementCollector collector)
+	private IEnumerable<DepthFirstVisitor> UpdatingPipeline(ReplacementCollector collector, Document document)
 	{
-		yield return new PropertyUpperCaser(collector);
-		yield return new DepricatedComponentPropertyGetterReplacer(collector);
-		yield return new MemberReferenceReplacer(collector);
-		yield return new TypeReferenceReplacer(collector);
+		yield return new PropertyUpperCaser(collector,document);
+		yield return new DepricatedComponentPropertyGetterReplacer(collector,document);
+		yield return new MemberReferenceReplacer(collector,document);
+		yield return new TypeReferenceReplacer(collector,document);
+		yield return new StringBasedGetComponentReplacer(collector,document);
 	}
 }
