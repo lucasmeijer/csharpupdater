@@ -2,40 +2,43 @@
 using Boo.Lang.Compiler;
 using UnityScript;
 
-public class JavascriptUpdater : BooUpdater.BooUpdater
+namespace JavascriptUpdater
 {
-	class MyUnityScriptCompiler : UnityScriptCompiler
+	public class JavascriptUpdater : BooUpdater.BooUpdater
 	{
-		public BooCompiler GetCompiler()
+		class MyUnityScriptCompiler : UnityScriptCompiler
 		{
-			return _compiler;
+			public BooCompiler GetCompiler()
+			{
+				return _compiler;
+			}
 		}
-	}
 
-	protected override BooCompiler CreateCompiler()
-	{
-		return new MyUnityScriptCompiler().GetCompiler();
-	}
+		protected override BooCompiler CreateCompiler()
+		{
+			return new MyUnityScriptCompiler().GetCompiler();
+		}
 
-	override protected void SetupCompilerPipeline()
-	{
-		base.SetupCompilerPipeline();
-		_compiler.Parameters.Pipeline = UnityScriptCompiler.Pipelines.AdjustBooPipeline(_compiler.Parameters.Pipeline);
-	}
+		override protected void SetupCompilerPipeline()
+		{
+			base.SetupCompilerPipeline();
+			_compiler.Parameters.Pipeline = UnityScriptCompiler.Pipelines.AdjustBooPipeline(_compiler.Parameters.Pipeline);
+		}
 
 
-	protected override void SetupCompilerParameters()
-	{
-		base.SetupCompilerParameters();
+		protected override void SetupCompilerParameters()
+		{
+			base.SetupCompilerParameters();
 
-		var parameters = (UnityScriptCompilerParameters) _compiler.Parameters;
-		parameters.ScriptMainMethod = "MyMain";
-		parameters.Imports = new Boo.Lang.List<String>() { "UnityEngine"};
+			var parameters = (UnityScriptCompilerParameters) _compiler.Parameters;
+			parameters.ScriptMainMethod = "MyMain";
+			parameters.Imports = new Boo.Lang.List<String>() { "UnityEngine"};
 			
-		var monobehaviour = OldUnityEngineAssembly().GetType("UnityEngine.MonoBehaviour");
-		if (monobehaviour == null)
-			throw new Exception();
+			var monobehaviour = OldUnityEngineAssembly().GetType("UnityEngine.MonoBehaviour");
+			if (monobehaviour == null)
+				throw new Exception();
 
-		parameters.ScriptBaseType = monobehaviour;
+			parameters.ScriptBaseType = monobehaviour;
+		}
 	}
 }

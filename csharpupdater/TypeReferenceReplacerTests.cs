@@ -2,7 +2,7 @@
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using NUnit.Framework;
 
-namespace csharpupdater
+namespace CSharpUpdater
 {
 	[TestFixture]
 	class TypeReferenceReplacerTests : CSharpUpdaterTestsBase

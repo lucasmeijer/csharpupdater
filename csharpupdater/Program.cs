@@ -1,4 +1,4 @@
-﻿namespace csharpupdater
+﻿namespace CSharpUpdater
 {
 	class Program
 	{

@@ -37,9 +37,9 @@ namespace ScriptUpdater
 		{
 			var extension = Path.GetExtension(file);
 			if (extension==".cs")
-				return new CSharpUpdater();
+				return new CSharpUpdater.CSharpUpdater();
 			if (extension==".js")
-				return new JavascriptUpdater();
+				return new JavascriptUpdater.JavascriptUpdater();
 			return null;
 		}
 	}

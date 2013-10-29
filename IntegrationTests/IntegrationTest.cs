@@ -10,7 +10,7 @@ namespace IntegrationTests
 		[Test]
 		public void TestCSharp()
 		{
-			Test(new CSharpUpdater(), CSharp);
+			Test(new CSharpUpdater.CSharpUpdater(), CSharp);
 		}
 
 		[Test]
@@ -22,7 +22,7 @@ namespace IntegrationTests
 		[Test]
 		public void TestJavascript()
 		{
-			Test(new JavascriptUpdater(), Javascript);
+			Test(new JavascriptUpdater.JavascriptUpdater(), Javascript);
 		}
 
 		private void Test(IScriptUpdater updater, GetTestData getTestData)

@@ -11,7 +11,7 @@ namespace IntegrationTests
 		public void Test()
 		{
 			var input = System.IO.File.ReadAllText("C:\\Users\\Public\\Documents\\Unity Projects\\4-0_AngryBots\\Assets\\Scripts\\AI\\MechAttackMoveController.js");
-			var booupdater = new JavascriptUpdater();
+			var booupdater = new JavascriptUpdater.JavascriptUpdater();
 			Console.WriteLine(booupdater.UpdateSmall(input));
 		}
 	}

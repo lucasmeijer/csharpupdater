@@ -4,42 +4,45 @@ using ICSharpCode.NRefactory;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Editor;
 
-public class ReplacementCollector
+namespace CSharpUpdater
 {
-	struct Replacement
+	public class ReplacementCollector
 	{
-		public TextLocation Start;
-		public TextLocation End;
-		public string ReplaceString;
-
-		public Replacement(AstNode astNode, string replaceString)
+		struct Replacement
 		{
-			Start = astNode.StartLocation;
-			End = astNode.EndLocation;
-			this.ReplaceString = replaceString;
+			public TextLocation Start;
+			public TextLocation End;
+			public string ReplaceString;
+
+			public Replacement(AstNode astNode, string replaceString)
+			{
+				Start = astNode.StartLocation;
+				End = astNode.EndLocation;
+				this.ReplaceString = replaceString;
+			}
 		}
-	}
 
-	readonly List<Replacement> _replacements = new List<Replacement>();
+		readonly List<Replacement> _replacements = new List<Replacement>();
 
-	void Add(Replacement replacement)
-	{
-		_replacements.Add(replacement);
-	}
-
-	public string ApplyTo(ReadOnlyDocument doc)
-	{
-		var input = doc.Text;
-		foreach (var replacement in _replacements.OrderBy(t => t.Start).Reverse())
+		void Add(Replacement replacement)
 		{
-			input = input.Substring(0, doc.GetOffset(replacement.Start)) + replacement.ReplaceString +
-			        input.Substring(doc.GetOffset(replacement.End));
+			_replacements.Add(replacement);
 		}
-		return input;
-	}
 
-	public void Add(AstNode astNode, string replacement)
-	{
-		Add(new Replacement(astNode,replacement));
+		public string ApplyTo(ReadOnlyDocument doc)
+		{
+			var input = doc.Text;
+			foreach (var replacement in _replacements.OrderBy(t => t.Start).Reverse())
+			{
+				input = input.Substring(0, doc.GetOffset(replacement.Start)) + replacement.ReplaceString +
+				        input.Substring(doc.GetOffset(replacement.End));
+			}
+			return input;
+		}
+
+		public void Add(AstNode astNode, string replacement)
+		{
+			Add(new Replacement(astNode,replacement));
+		}
 	}
 }

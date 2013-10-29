@@ -7,8 +7,8 @@
     <ProjectGuid>{8BA01B8B-6D06-4BAC-8080-94C0180E05DE}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>csharpupdater</RootNamespace>
-    <AssemblyName>csharpupdater</AssemblyName>
+    <RootNamespace>CSharpUpdater</RootNamespace>
+    <AssemblyName>CSharpUpdater</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
