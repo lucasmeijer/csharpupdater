@@ -21,11 +21,11 @@ internal class Document
 
 			var c = _text[offsetCounter];
 			
-			if (c == "\u000A"[0])
+			if (c == 10)
 			{
 				linecount++;
 				charcount = 1;
-			} else if (c == "\u000D"[0])
+			} else if (c == 13)
 			{
 			}
 			

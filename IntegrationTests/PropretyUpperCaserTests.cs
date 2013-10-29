@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 
 namespace IntegrationTests.PropertyUpperCaserTests
 {
@@ -65,6 +66,50 @@ namespace IntegrationTests.PropertyUpperCaserTests
 		{
 			i = "function S() { var a = this.transform.name; }";
 			e = "function S() { var a = this.Transform.Name; }";
+		}
+	}
+
+	[TestFixture]
+	public class OnMethodInvocationResult: IntegrationTest
+	{
+		protected override void CSharp(out string i, out string e)
+		{
+			i = "using UnityEngine; class C { void Start() { string a = GameObject.Find(\"a\").transform.name; } }";
+			e = "using UnityEngine; class C { void Start() { string a = GameObject.Find(\"a\").Transform.Name; } }";
+		}
+
+		protected override void Boo(out string i, out string e)
+		{
+			i = "class C:\n  def S():\n    q as string = UnityEngine.GameObject.Find(\"a\").transform.name";
+			e = "class C:\n  def S():\n    q as string = UnityEngine.GameObject.Find(\"a\").Transform.Name";
+		}
+
+		protected override void Javascript(out string i, out string e)
+		{
+			i = "var a = GameObject.Find(\"a\").transform.name;";
+			e = "var a = GameObject.Find(\"a\").Transform.Name;";
+		}
+	}
+
+	[TestFixture]
+	public class OnMethodInvocationResultAfterVariableOfUnknownType : IntegrationTest
+	{
+		protected override void CSharp(out string i, out string e)
+		{
+			i = "using UnityEngine; class C { void Start() { NoIdeaWhatThisIs b; string a = GameObject.Find(\"a\").transform.name; } }";
+			e = "using UnityEngine; class C { void Start() { NoIdeaWhatThisIs b; string a = GameObject.Find(\"a\").Transform.Name; } }";
+		}
+
+		protected override void Boo(out string i, out string e)
+		{
+			i = "class C:\n  def S():\n    bla as NoIdeaWahtThisIs\n    q as string = UnityEngine.GameObject.Find(\"a\").transform.name";
+			e = "class C:\n  def S():\n    bla as NoIdeaWahtThisIs\n    q as string = UnityEngine.GameObject.Find(\"a\").Transform.Name";
+		}
+
+		protected override void Javascript(out string i, out string e)
+		{
+			i = "var c:NoIdeaWhatThisIs;\nvar a = GameObject.Find(\"a\").transform.name;";
+			e = "var c:NoIdeaWhatThisIs;\nvar a = GameObject.Find(\"a\").Transform.Name;";
 		}
 	}
 }

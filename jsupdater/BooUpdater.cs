@@ -51,6 +51,7 @@ public class BooUpdater : IScriptUpdater
 	protected virtual void SetupCompilerPipeline()
 	{
 		_compiler.Parameters.Pipeline = new Boo.Lang.Compiler.Pipelines.ResolveExpressions();
+		_compiler.Parameters.Pipeline.BreakOnErrors = false;
 	}
 
 	protected virtual void SetupCompilerParameters()

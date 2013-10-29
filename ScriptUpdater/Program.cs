@@ -8,7 +8,8 @@ namespace ScriptUpdater
 	{
 		static void Main(string[] args)
 		{
-			var dir = "C:\\Users\\Public\\Documents\\Unity Projects\\4-0_AngryBots\\Assets";
+			//var dir = "C:\\Users\\Public\\Documents\\Unity Projects\\4-0_AngryBots\\Assets";
+			var dir = "C:\\Users\\box1\\Documents\\stealth\\Assets";
 			foreach (var file in AllFilesIn(dir))
 			{
 				var updater = UpdaterFor(file);
@@ -31,8 +32,6 @@ namespace ScriptUpdater
 		{
 			return Directory.EnumerateFileSystemEntries(dir, "*.*", SearchOption.AllDirectories);
 		}
-
-
 
 		private static IScriptUpdater UpdaterFor(string file)
 		{
