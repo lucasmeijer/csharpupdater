@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csharpupdater", "csharpupdater\csharpupdater.csproj", "{8BA01B8B-6D06-4BAC-8080-94C0180E05DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpUpdater", "CSharpUpdater\CSharpUpdater.csproj", "{8BA01B8B-6D06-4BAC-8080-94C0180E05DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooUpdater", "jsupdater\BooUpdater.csproj", "{8C551102-3A16-4599-94BC-92F8F832BB83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooUpdater", "BooUpdater\BooUpdater.csproj", "{8C551102-3A16-4599-94BC-92F8F832BB83}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boo.Lang", "..\..\..\..\..\..\boo\src\Boo.Lang\Boo.Lang.csproj", "{A359E52E-5E90-40F3-A5F0-257FE2D545EE}"
 EndProject
