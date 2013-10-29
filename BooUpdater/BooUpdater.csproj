@@ -7,8 +7,8 @@
     <ProjectGuid>{8C551102-3A16-4599-94BC-92F8F832BB83}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>jsupdater</RootNamespace>
-    <AssemblyName>jsupdater</AssemblyName>
+    <RootNamespace>BooUpdater</RootNamespace>
+    <AssemblyName>BooUpdater</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

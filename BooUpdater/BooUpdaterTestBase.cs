@@ -2,14 +2,17 @@
 using Boo.Lang.Compiler.Ast;
 using NUnit.Framework;
 
-internal abstract class BooUpdaterTestBase
+namespace BooUpdater
 {
-	protected void Test(string expected, string input)
+	internal abstract class BooUpdaterTestBase
 	{
-		var updater = new BooUpdater();
-		var output = updater.Update(input, PipeLineForTest);
-		Assert.AreEqual(expected, output);
-	}
+		protected void Test(string expected, string input)
+		{
+			var updater = new BooUpdater();
+			var output = updater.Update(input, PipeLineForTest);
+			Assert.AreEqual(expected, output);
+		}
 
-	protected abstract IEnumerable<DepthFirstVisitor> PipeLineForTest(ReplacementCollector collector, Document document);
+		protected abstract IEnumerable<DepthFirstVisitor> PipeLineForTest(ReplacementCollector collector, Document document);
+	}
 }

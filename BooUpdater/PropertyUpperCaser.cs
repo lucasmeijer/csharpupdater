@@ -1,44 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Boo.Lang.Compiler.Ast;
 using Boo.Lang.Compiler.TypeSystem;
-using NUnit.Framework;
 
-class PropertyUpperCaser : ReplacingAstVisitor
+namespace BooUpdater
 {
-	private readonly bool _onlyTransform;
-
-	public PropertyUpperCaser(ReplacementCollector replacementCollector, Document document, bool onlyTransform=false) : base(replacementCollector, document)
+	class PropertyUpperCaser : ReplacingAstVisitor
 	{
-		_onlyTransform = onlyTransform;
-	}
+		private readonly bool _onlyTransform;
 
-	public override void OnMemberReferenceExpression(MemberReferenceExpression node)
-	{
-		base.OnMemberReferenceExpression(node);
+		public PropertyUpperCaser(ReplacementCollector replacementCollector, Document document, bool onlyTransform=false) : base(replacementCollector, document)
+		{
+			_onlyTransform = onlyTransform;
+		}
 
-		var externalProperty = node.Entity as ExternalProperty;
-		if (externalProperty == null)
-			return;
-		var propertyInfo = externalProperty.PropertyInfo;
-		var declaringType = propertyInfo.DeclaringType;
-		var assembly = declaringType.Assembly;
-		var assemblyName = assembly.GetName();
-		if (_onlyTransform && externalProperty.Name != "transform")
-			return;
+		public override void OnMemberReferenceExpression(MemberReferenceExpression node)
+		{
+			base.OnMemberReferenceExpression(node);
 
-		if (DepricatedComponentPropertyGetterReplacerKnowledge.PropertiesToReplace().Any(p => p.Item1 == externalProperty.FullName))
-			return;
+			var externalProperty = node.Entity as ExternalProperty;
+			if (externalProperty == null)
+				return;
+			var propertyInfo = externalProperty.PropertyInfo;
+			var declaringType = propertyInfo.DeclaringType;
+			var assembly = declaringType.Assembly;
+			var assemblyName = assembly.GetName();
+			if (_onlyTransform && externalProperty.Name != "transform")
+				return;
 
-		if (assemblyName.Name == "UnityEngine")
-			_replacementCollector.Add(node.LexicalInfo,node.Name.Length,UpperCaseFirstChar(node.Name));
-	}
+			if (DepricatedComponentPropertyGetterReplacerKnowledge.PropertiesToReplace().Any(p => p.Item1 == externalProperty.FullName))
+				return;
 
-	private string UpperCaseFirstChar(string name)
-	{
-		return char.ToUpper(name[0]) + name.Substring(1);
+			if (assemblyName.Name == "UnityEngine")
+				_replacementCollector.Add(node.LexicalInfo,node.Name.Length,UpperCaseFirstChar(node.Name));
+		}
+
+		private string UpperCaseFirstChar(string name)
+		{
+			return char.ToUpper(name[0]) + name.Substring(1);
+		}
 	}
 }

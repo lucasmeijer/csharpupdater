@@ -66,7 +66,7 @@
       <Project>{515a08ae-8af8-416c-acd1-6f821e8ba80c}</Project>
       <Name>JavascriptUpdater</Name>
     </ProjectReference>
-    <ProjectReference Include="..\jsupdater\BooUpdater.csproj">
+    <ProjectReference Include="..\BooUpdater\BooUpdater.csproj">
       <Project>{8c551102-3a16-4599-94bc-92f8f832bb83}</Project>
       <Name>BooUpdater</Name>
     </ProjectReference>

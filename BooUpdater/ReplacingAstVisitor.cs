@@ -1,11 +1,14 @@
 ﻿using Boo.Lang.Compiler.Ast;
 
-internal abstract class ReplacingAstVisitor : DepthFirstVisitor
+namespace BooUpdater
 {
-	protected readonly ReplacementCollector _replacementCollector;
-
-	protected ReplacingAstVisitor(ReplacementCollector replacementCollector, Document document)
+	internal abstract class ReplacingAstVisitor : DepthFirstVisitor
 	{
-		_replacementCollector = replacementCollector;
+		protected readonly ReplacementCollector _replacementCollector;
+
+		protected ReplacingAstVisitor(ReplacementCollector replacementCollector, Document document)
+		{
+			_replacementCollector = replacementCollector;
+		}
 	}
 }

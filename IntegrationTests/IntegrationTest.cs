@@ -16,7 +16,7 @@ namespace IntegrationTests
 		[Test]
 		public void TestBoo()
 		{
-			Test(new BooUpdater(), Boo);
+			Test(new BooUpdater.BooUpdater(), Boo);
 		}
 
 		[Test]

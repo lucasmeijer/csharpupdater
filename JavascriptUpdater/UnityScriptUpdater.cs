@@ -2,7 +2,7 @@
 using Boo.Lang.Compiler;
 using UnityScript;
 
-public class JavascriptUpdater : BooUpdater
+public class JavascriptUpdater : BooUpdater.BooUpdater
 {
 	class MyUnityScriptCompiler : UnityScriptCompiler
 	{

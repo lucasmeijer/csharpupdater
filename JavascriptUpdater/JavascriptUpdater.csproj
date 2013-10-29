@@ -60,7 +60,7 @@
       <Project>{a359e52e-5e90-40f3-a5f0-257fe2d545ee}</Project>
       <Name>Boo.Lang</Name>
     </ProjectReference>
-    <ProjectReference Include="..\jsupdater\BooUpdater.csproj">
+    <ProjectReference Include="..\BooUpdater\BooUpdater.csproj">
       <Project>{8c551102-3a16-4599-94bc-92f8f832bb83}</Project>
       <Name>BooUpdater</Name>
     </ProjectReference>
