@@ -7,7 +7,7 @@ namespace BooUpdater
 {
 	class DepricatedComponentPropertyGetterReplacer : ReplacingAstVisitor
 	{
-		public DepricatedComponentPropertyGetterReplacer(ReplacementCollector replacementCollector, Document document) : base(replacementCollector, document)
+		public DepricatedComponentPropertyGetterReplacer(ReplacementCollector replacementCollector) : base(replacementCollector)
 		{
 		}
 

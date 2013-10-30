@@ -4,7 +4,7 @@ namespace ScriptUpdating
 {
 	public interface IScriptUpdater
 	{
-		string Update(IEnumerable<SourceFile> input);
-		string UpdateSmall(IEnumerable<SourceFile> input);
+		IEnumerable<SourceFile> Update(IEnumerable<SourceFile> input);
+		IEnumerable<SourceFile> UpdateSmall(IEnumerable<SourceFile> input);
 	}
 }

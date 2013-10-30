@@ -5,7 +5,7 @@ namespace BooUpdater
 {
 	class StringBasedGetComponentReplacer : ReplacingAstVisitor
 	{
-		public StringBasedGetComponentReplacer(ReplacementCollector replacementCollector, Document document) : base(replacementCollector, document)
+		public StringBasedGetComponentReplacer(ReplacementCollector replacementCollector) : base(replacementCollector)
 		{
 		}
 

@@ -6,7 +6,7 @@ namespace BooUpdater
 {
 	class TypeReferenceReplacer : ReplacingAstVisitor
 	{
-		public TypeReferenceReplacer(ReplacementCollector replacementCollector, Document document) : base(replacementCollector, document)
+		public TypeReferenceReplacer(ReplacementCollector replacementCollector) : base(replacementCollector)
 		{
 		}
 
@@ -50,9 +50,9 @@ namespace BooUpdater
 			Test(e, i);
 		}
 	
-		protected override IEnumerable<DepthFirstVisitor> PipeLineForTest(ReplacementCollector collector, Document document)
+		protected override IEnumerable<DepthFirstVisitor> PipeLineForTest(ReplacementCollector collector)
 		{
-			yield return new TypeReferenceReplacer(collector, document);
+			yield return new TypeReferenceReplacer(collector);
 		}
 	}
 }

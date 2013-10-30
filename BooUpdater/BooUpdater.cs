@@ -14,17 +14,17 @@ namespace BooUpdater
 		protected BooCompiler _compiler;
 		protected const string OldUnityEngineLocation = "C:\\Program Files (x86)\\Unity\\Editor\\Data\\PlaybackEngines\\windowsstandaloneplayer\\Managed\\UnityEngine.dll";
 
-		public string Update(IEnumerable<SourceFile> input)
+		public IEnumerable<SourceFile> Update(IEnumerable<SourceFile> input)
 		{
 			return Update(input, null);
 		}
 
-		public string UpdateSmall(IEnumerable<SourceFile> input)
+		public IEnumerable<SourceFile> UpdateSmall(IEnumerable<SourceFile> input)
 		{
 			return Update(input,SmallPipeline);
 		}
 
-		internal string Update(IEnumerable<SourceFile> inputs, Func<ReplacementCollector, Document, IEnumerable<DepthFirstVisitor>> updatingPipeline)
+		internal IEnumerable<SourceFile> Update(IEnumerable<SourceFile> inputs, Func<ReplacementCollector, IEnumerable<DepthFirstVisitor>> updatingPipeline)
 		{
 			_compiler = CreateCompiler();
 			SetupCompilerParameters();
@@ -40,18 +40,15 @@ namespace BooUpdater
 			if (updatingPipeline == null)
 				updatingPipeline = UpdatingPipeline;
 
-			foreach (var input in inputs)
+			var collector = new ReplacementCollector();
+			var pipeline = updatingPipeline(collector).ToArray();
+			foreach (DepthFirstVisitor step in pipeline)
 			{
-				var document = new Document(input.Contents);
-				var collector = new ReplacementCollector(document);
-				foreach (DepthFirstVisitor step in updatingPipeline(collector, document))
-				{
-					step.Visit(result.CompileUnit);
-				}
-				input.Contents = collector.ApplyOn(input.Contents);
+				step.Visit(result.CompileUnit);
 			}
+			collector.ApplyOn(inputs);
 
-			return inputs.Single().Contents;
+			return inputs;
 		}
 
 		protected virtual void SetupCompilerPipeline()
@@ -76,18 +73,18 @@ namespace BooUpdater
 			return new BooCompiler();
 		}
 
-		private IEnumerable<DepthFirstVisitor> UpdatingPipeline(ReplacementCollector collector, Document document)
+		private IEnumerable<DepthFirstVisitor> UpdatingPipeline(ReplacementCollector collector)
 		{
-			yield return new PropertyUpperCaser(collector,document);
-			yield return new DepricatedComponentPropertyGetterReplacer(collector,document);
-			yield return new MemberReferenceReplacer(collector,document);
-			yield return new TypeReferenceReplacer(collector,document);
-			yield return new StringBasedGetComponentReplacer(collector,document);
+			yield return new PropertyUpperCaser(collector);
+			yield return new DepricatedComponentPropertyGetterReplacer(collector);
+			yield return new MemberReferenceReplacer(collector);
+			yield return new TypeReferenceReplacer(collector);
+			yield return new StringBasedGetComponentReplacer(collector);
 		}
 
-		private IEnumerable<DepthFirstVisitor> SmallPipeline(ReplacementCollector collector, Document document)
+		private IEnumerable<DepthFirstVisitor> SmallPipeline(ReplacementCollector collector)
 		{
-			yield return new PropertyUpperCaser(collector, document,true);
+			yield return new PropertyUpperCaser(collector, true);
 		}
 
 	}

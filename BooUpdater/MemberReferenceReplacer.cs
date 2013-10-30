@@ -4,8 +4,8 @@ namespace BooUpdater
 {
 	class MemberReferenceReplacer : ReplacingAstVisitor
 	{
-		public MemberReferenceReplacer(ReplacementCollector replacementCollector, Document document)
-			: base(replacementCollector, document)
+		public MemberReferenceReplacer(ReplacementCollector replacementCollector)
+			: base(replacementCollector)
 		{
 		}
 

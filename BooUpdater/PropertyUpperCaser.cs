@@ -9,7 +9,7 @@ namespace BooUpdater
 	{
 		private readonly bool _onlyTransform;
 
-		public PropertyUpperCaser(ReplacementCollector replacementCollector, Document document, bool onlyTransform=false) : base(replacementCollector, document)
+		public PropertyUpperCaser(ReplacementCollector replacementCollector, bool onlyTransform=false) : base(replacementCollector)
 		{
 			_onlyTransform = onlyTransform;
 		}

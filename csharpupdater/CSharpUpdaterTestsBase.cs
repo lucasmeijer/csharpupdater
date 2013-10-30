@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using NUnit.Framework;
 
@@ -15,7 +16,7 @@ namespace CSharpUpdater
 		{
 			var updater = new CSharpUpdater();
 			var output = updater.Update(input, PipelineForTest);
-			Assert.AreEqual(expected, output);
+			Assert.AreEqual(expected, output.First().Contents);
 		}
 
 		protected abstract IEnumerable<ReplacingAstVisitor> PipelineForTest(ReplacementCollector replacementCollector, CSharpAstResolver resolver);

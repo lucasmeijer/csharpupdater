@@ -13,12 +13,12 @@ namespace CSharpUpdater
 {
 	public class CSharpUpdater : IScriptUpdater
 	{
-		public string Update(IEnumerable<SourceFile> input)
+		public IEnumerable<SourceFile> Update(IEnumerable<SourceFile> input)
 		{
 			return Update(input, null);
 		}
 
-		public string UpdateSmall(IEnumerable<SourceFile> input)
+		public IEnumerable<SourceFile> UpdateSmall(IEnumerable<SourceFile> input)
 		{
 			return Update(input, SmallPipeline);
 		}
@@ -31,7 +31,7 @@ namespace CSharpUpdater
 			public SourceFile SourceFile;
 		}
 
-		internal string Update(string input, Func<ReplacementCollector, CSharpAstResolver,IEnumerable<ReplacingAstVisitor>> pipeLineProvider)
+		internal IEnumerable<SourceFile> Update(string input, Func<ReplacementCollector, CSharpAstResolver, IEnumerable<ReplacingAstVisitor>> pipeLineProvider)
 		{
 			return Update(new [] { new SourceFile()
 			                       {
@@ -40,7 +40,7 @@ namespace CSharpUpdater
 			                       }}, pipeLineProvider);
 		}
 
-		private string Update(IEnumerable<SourceFile> sourceFiles, Func<ReplacementCollector, CSharpAstResolver, IEnumerable<ReplacingAstVisitor>> pipeLineProvider)
+		private IEnumerable<SourceFile> Update(IEnumerable<SourceFile> sourceFiles, Func<ReplacementCollector, CSharpAstResolver, IEnumerable<ReplacingAstVisitor>> pipeLineProvider)
 		{
 			var sourceFilesData = SourceFilesDataFor(sourceFiles);
 
@@ -60,7 +60,7 @@ namespace CSharpUpdater
 				sourceFileData.SourceFile.Contents = replacementCollector.ApplyTo(sourceFileData.Document);
 			}
 
-			return sourceFilesData.Single().SourceFile.Contents;
+			return sourceFilesData.Select(s => s.SourceFile);
 		}
 
 		private static IProjectContent SetupCSharpProjectContentFor(IEnumerable<SourceFileData> sourceFilesData)

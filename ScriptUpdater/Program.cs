@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using ScriptUpdating;
 
 namespace ScriptUpdater
@@ -11,22 +12,18 @@ namespace ScriptUpdater
 		{
 			//var dir = "C:\\Users\\Public\\Documents\\Unity Projects\\4-0_AngryBots\\Assets";
 			var dir = "C:\\Users\\box1\\Documents\\stealth\\Assets";
-			foreach (var file in AllFilesIn(dir))
-			{
-				var updater = UpdaterFor(file);
-				if (updater == null)
-					continue;
-				Console.WriteLine("Processing: "+file);
-				try
-				{
-					var output = updater.UpdateSmall(new [] { SourceFile.For(file)});
-					File.WriteAllText(file, output);
-				}
-				catch (Exception e)
-				{
-					Console.WriteLine("Failed to update: "+file+" exception: "+e);
-				}
-			}
+
+			UpdateLanguage(dir, ".js", new JavascriptUpdater.JavascriptUpdater());
+			UpdateLanguage(dir, ".cs", new CSharpUpdater.CSharpUpdater());
+		}
+
+		private static void UpdateLanguage(string dir, string extension, IScriptUpdater updater)
+		{
+			var allfiles = AllFilesIn(dir);
+			var jsfiles = allfiles.Where(f => Path.GetExtension(f).ToLower() == extension);
+			var output = updater.Update(jsfiles.Select(SourceFile.For));
+			foreach (var file in output)
+				File.WriteAllText(file.FileName, file.Contents);
 		}
 
 		private static IEnumerable<string> AllFilesIn(string dir)
@@ -34,14 +31,5 @@ namespace ScriptUpdater
 			return Directory.EnumerateFileSystemEntries(dir, "*.*", SearchOption.AllDirectories);
 		}
 
-		private static IScriptUpdater UpdaterFor(string file)
-		{
-			var extension = Path.GetExtension(file);
-			if (extension==".cs")
-				return new CSharpUpdater.CSharpUpdater();
-			if (extension==".js")
-				return new JavascriptUpdater.JavascriptUpdater();
-			return null;
-		}
 	}
 }
