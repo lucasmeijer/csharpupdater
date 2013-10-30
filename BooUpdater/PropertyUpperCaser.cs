@@ -25,8 +25,13 @@ namespace BooUpdater
 			var declaringType = propertyInfo.DeclaringType;
 			var assembly = declaringType.Assembly;
 			var assemblyName = assembly.GetName();
-			if (_onlyTransform && externalProperty.Name != "transform")
-				return;
+			if (_onlyTransform)
+			{
+				if (externalProperty.FullName != "UnityEngine.Component.transform" &&
+				    externalProperty.FullName != "UnityEngine.GameObject.transform")
+					return;
+			}
+		
 
 			if (DepricatedComponentPropertyGetterReplacerKnowledge.PropertiesToReplace().Any(p => p.Item1 == externalProperty.FullName))
 				return;

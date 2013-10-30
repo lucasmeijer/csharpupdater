@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Boo.Lang.Compiler.Ast;
 using ScriptUpdating;
@@ -55,6 +56,17 @@ namespace BooUpdater
 				var tail = endOffset < result.Length ? result.Substring(endOffset) : "";
 				result = result.Substring(0,startOffset) + replacement.replacementstring + tail;
 			}
+
+
+			if (sourceFile.FileName.Contains("PatrolPoint.js"))
+			{
+				Console.WriteLine("ReplacementCount: "+replacements.Count());
+				Console.WriteLine("Before");
+				Console.WriteLine(sourceFile.Contents);
+				Console.WriteLine("After");
+				Console.WriteLine(result);
+			}
+
 			sourceFile.Contents = result;
 		}
 	}

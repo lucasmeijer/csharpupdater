@@ -13,12 +13,12 @@ namespace CSharpUpdater
 {
 	public class CSharpUpdater : IScriptUpdater
 	{
-		public IEnumerable<SourceFile> Update(IEnumerable<SourceFile> input)
+		public IEnumerable<SourceFile> Update(SourceFile[] input)
 		{
 			return Update(input, null);
 		}
 
-		public IEnumerable<SourceFile> UpdateSmall(IEnumerable<SourceFile> input)
+		public IEnumerable<SourceFile> UpdateSmall(SourceFile[] input)
 		{
 			return Update(input, SmallPipeline);
 		}
@@ -40,7 +40,7 @@ namespace CSharpUpdater
 			                       }}, pipeLineProvider);
 		}
 
-		private IEnumerable<SourceFile> Update(IEnumerable<SourceFile> sourceFiles, Func<ReplacementCollector, CSharpAstResolver, IEnumerable<ReplacingAstVisitor>> pipeLineProvider)
+		private IEnumerable<SourceFile> Update(SourceFile[] sourceFiles, Func<ReplacementCollector, CSharpAstResolver, IEnumerable<ReplacingAstVisitor>> pipeLineProvider)
 		{
 			var sourceFilesData = SourceFilesDataFor(sourceFiles);
 

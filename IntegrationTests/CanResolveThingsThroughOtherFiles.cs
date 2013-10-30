@@ -9,7 +9,7 @@ namespace IntegrationTests
 {
 	class CanResolveThingsThroughOtherFiles : MultiFileIntegrationTest
 	{
-		protected override void CSharp(out IEnumerable<SourceFile> i, out string e)
+		protected override void CSharp(out SourceFile[] i, out string e)
 		{
 			i = new[]
 			    {
@@ -28,7 +28,7 @@ namespace IntegrationTests
 			e = "class C : ClassInOtherFile { void Start() { var s = Transform.Name; } }";
 		}
 
-		protected override void Boo(out IEnumerable<SourceFile> i, out string e)
+		protected override void Boo(out SourceFile[] i, out string e)
 		{
 			i = new[]
 			    {
@@ -47,7 +47,7 @@ namespace IntegrationTests
 			e = "class C(ClassInOtherFile):\n  def S():\n    s as string = Transform.Name";
 		}
 
-		protected override void Javascript(out IEnumerable<SourceFile> i, out string e)
+		protected override void Javascript(out SourceFile[] i, out string e)
 		{
 			i = new[]
 			    {

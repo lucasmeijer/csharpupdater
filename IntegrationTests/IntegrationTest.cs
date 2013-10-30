@@ -46,7 +46,7 @@ namespace IntegrationTests
 
 	public abstract class MultiFileIntegrationTest
 	{
-		delegate void GetTestData(out IEnumerable<SourceFile> input, out string expected);
+		delegate void GetTestData(out SourceFile[] input, out string expected);
 
 		[Test]
 		public void TestCSharp()
@@ -68,7 +68,7 @@ namespace IntegrationTests
 
 		private void Test(IScriptUpdater updater, GetTestData getTestData)
 		{
-			IEnumerable<SourceFile> input;
+			SourceFile[] input;
 			string expected;
 			getTestData(out input, out expected);
 
@@ -76,8 +76,8 @@ namespace IntegrationTests
 			Assert.AreEqual(expected, output.First().Contents);
 		}
 
-		protected abstract void CSharp(out IEnumerable<SourceFile> i, out string e);
-		protected abstract void Boo(out IEnumerable<SourceFile> i, out string e);
-		protected abstract void Javascript(out IEnumerable<SourceFile> i, out string e);
+		protected abstract void CSharp(out SourceFile[] i, out string e);
+		protected abstract void Boo(out SourceFile[] i, out string e);
+		protected abstract void Javascript(out SourceFile[] i, out string e);
 	}
 }

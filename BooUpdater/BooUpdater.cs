@@ -14,17 +14,17 @@ namespace BooUpdater
 		protected BooCompiler _compiler;
 		protected const string OldUnityEngineLocation = "C:\\Program Files (x86)\\Unity\\Editor\\Data\\PlaybackEngines\\windowsstandaloneplayer\\Managed\\UnityEngine.dll";
 
-		public IEnumerable<SourceFile> Update(IEnumerable<SourceFile> input)
+		public IEnumerable<SourceFile> Update(SourceFile[] input)
 		{
 			return Update(input, null);
 		}
 
-		public IEnumerable<SourceFile> UpdateSmall(IEnumerable<SourceFile> input)
+		public IEnumerable<SourceFile> UpdateSmall(SourceFile[] input)
 		{
 			return Update(input,SmallPipeline);
 		}
 
-		internal IEnumerable<SourceFile> Update(IEnumerable<SourceFile> inputs, Func<ReplacementCollector, IEnumerable<DepthFirstVisitor>> updatingPipeline)
+		internal SourceFile[] Update(SourceFile[] inputs, Func<ReplacementCollector, IEnumerable<DepthFirstVisitor>> updatingPipeline)
 		{
 			_compiler = CreateCompiler();
 			SetupCompilerParameters();
