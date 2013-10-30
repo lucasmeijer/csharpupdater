@@ -60,8 +60,14 @@ namespace BooUpdater
 		protected virtual void SetupCompilerParameters()
 		{
 			_compiler.Parameters.GenerateInMemory = true;
+
+			foreach(var define in PreprocessorDefines.Get())
+				_compiler.Parameters.Defines.Add(define, "1");
+
 			_compiler.Parameters.References.Add(OldUnityEngineAssembly());
 		}
+
+		
 
 		protected Assembly OldUnityEngineAssembly()
 		{
@@ -86,6 +92,5 @@ namespace BooUpdater
 		{
 			yield return new PropertyUpperCaser(collector, true);
 		}
-
 	}
 }

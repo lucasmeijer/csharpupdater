@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="DepricatedComponentPropertyGetterReplacerKnowledge.cs" />
     <Compile Include="IScriptUpdater.cs" />
+    <Compile Include="PreprocessorDefines.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceFile.cs" />
   </ItemGroup>

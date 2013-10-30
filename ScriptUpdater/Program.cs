@@ -20,8 +20,8 @@ namespace ScriptUpdater
 		private static void UpdateLanguage(string dir, string extension, IScriptUpdater updater)
 		{
 			var allfiles = AllFilesIn(dir);
-			var jsfiles = allfiles.Where(f => Path.GetExtension(f).ToLower() == extension);
-			var output = updater.Update(jsfiles.Select(SourceFile.For));
+			var files = allfiles.Where(f => Path.GetExtension(f).ToLower() == extension);
+			var output = updater.UpdateSmall(files.Select(SourceFile.For));
 			foreach (var file in output)
 				File.WriteAllText(file.FileName, file.Contents);
 		}

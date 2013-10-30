@@ -67,10 +67,13 @@ namespace CSharpUpdater
 		{
 			IProjectContent project = new CSharpProjectContent();
 			var cecilLoader = new CecilLoader {LazyLoad = true};
-			var assembly = cecilLoader.LoadAssemblyFile(					"C:/Program Files (x86)/Unity/Editor/Data/PlaybackEngines/windowsstandaloneplayer/Managed/UnityEngine.dll");
+			var assembly =
+				cecilLoader.LoadAssemblyFile(
+					"C:/Program Files (x86)/Unity/Editor/Data/PlaybackEngines/windowsstandaloneplayer/Managed/UnityEngine.dll");
 			project = project.AddAssemblyReferences(assembly);
 			project.AddAssemblyReferences(new CecilLoader().LoadAssemblyFile(typeof (object).Assembly.Location));
 			project = AddSourceFilesToProject(sourceFilesData, project);
+	
 			return project;
 		}
 
@@ -89,7 +92,14 @@ namespace CSharpUpdater
 			foreach (var sourceFile in sourceFiles)
 			{
 				var doc = new ReadOnlyDocument(sourceFile.Contents);
-				var syntaxTree = new CSharpParser().Parse(doc, sourceFile.FileName);
+
+				var cSharpParser = new CSharpParser();
+
+				foreach(var define in PreprocessorDefines.Get())
+					cSharpParser.CompilerSettings.ConditionalSymbols.Add(define);
+
+				var syntaxTree = cSharpParser.Parse(doc, sourceFile.FileName);
+				
 				var unresolvedFile = syntaxTree.ToTypeSystem();
 				sourceFilesData.Add(new SourceFileData()
 				                    {

@@ -48,6 +48,7 @@
     <Compile Include="IntegrationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringBasedGetComponentReplacerTests.cs" />
+    <Compile Include="WillReplaceInsidePreprocessorIf.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\..\..\boo\src\Boo.Lang.Parser\Boo.Lang.Parser.csproj">
