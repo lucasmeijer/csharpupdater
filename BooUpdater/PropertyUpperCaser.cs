@@ -31,7 +31,6 @@ namespace BooUpdater
 				    externalProperty.FullName != "UnityEngine.GameObject.transform")
 					return;
 			}
-		
 
 			if (DepricatedComponentPropertyGetterReplacerKnowledge.PropertiesToReplace().Any(p => p.Item1 == externalProperty.FullName))
 				return;

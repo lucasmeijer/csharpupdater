@@ -35,7 +35,7 @@ namespace ScriptUpdater
 
 		private static IEnumerable<string> AllFilesIn(string dir)
 		{
-			return Directory.EnumerateFileSystemEntries(dir, "*.*", SearchOption.AllDirectories);
+			return Directory.GetFiles(dir, "*", SearchOption.AllDirectories);
 		}
 
 	}
