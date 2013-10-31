@@ -19,7 +19,7 @@ namespace BooUpdater
 
 			if (node.Entity.FullName != "UnityEngine.GameObject")
 				return;
-			_replacementCollector.Add(node.LexicalInfo, node.OriginalName.Length, "Unity.Runtime.Core.SceneObject");
+			_replacementCollector.Add(node.LexicalInfo, /*node.OriginalName.Length*/ node.Name.Length, "Unity.Runtime.Core.SceneObject");
 		}
 	}
 
