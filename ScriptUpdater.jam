@@ -1,0 +1,48 @@
+SubDir TOP ;
+
+targetdir = $(TOP)/build/WindowsEditor/Data/Tools/ScriptUpdater ;
+local nunit = $(TOP)/Tools/ScriptUpdater/packages/NUnit.2.6.3/lib/nunit.framework.dll ;
+
+rule BuildSubAssemblyOfScriptUpdater name : deps : refs
+{
+	BuildAssemblyFromFolderWithCSFiles $(name:B) : 4.0 : $(targetdir)/$(name) : $(TOP)/Tools/ScriptUpdater/$(name:B) : $(refs) $(targetdir)/$(deps) ;
+
+	Depends $(name:B) : $(deps:B) ;
+
+	for ref in $(refs)
+	{
+		CopyFile ScriptUpdater : $(targetdir)/$(ref:BS) : $(ref) ;
+	}
+}
+
+BuildSubAssemblyOfScriptUpdater ScriptUpdating.dll ;
+
+BuildSubAssemblyOfScriptUpdater 
+	CSharpUpdater.dll : ScriptUpdating.dll :
+	$(TOP)/Tools/ScriptUpdater/packages/ICSharpCode.NRefactory.5.3.0/lib/Net40/ICSharpCode.NRefactory.dll
+	$(TOP)/Tools/ScriptUpdater/packages/ICSharpCode.NRefactory.5.3.0/lib/Net40/ICSharpCode.NRefactory.CSharp.dll
+	$(TOP)/Tools/ScriptUpdater/packages/Mono.Cecil.0.9.5.4/lib/Net40/Mono.Cecil.dll
+	$(nunit)
+;
+
+local monolib = $(TOP)/External/MonoBleedingEdge/builds/monodistribution/lib/mono/4.0 ;
+local boolibs = 
+	$(monolib)/Boo.Lang.dll
+ 	$(monolib)/Boo.Lang.Compiler.dll
+ 	$(monolib)/Boo.Lang.Extensions.dll
+ 	$(monolib)/Boo.Lang.Parser.dll
+ ;
+
+BuildSubAssemblyOfScriptUpdater BooUpdater.dll : ScriptUpdating.dll : $(boolibs) $(nunit) ;
+
+BuildSubAssemblyOfScriptUpdater
+  JavascriptUpdater.dll : BooUpdater.dll ScriptUpdating.dll :
+  $(boolibs)
+  $(monolib)/UnityScript.dll
+  $(monolib)/UnityScript.Lang.dll
+  $(nunit)
+;
+
+local allupdaters = JavascriptUpdater.dll BooUpdater.dll CSharpUpdater.dll ScriptUpdating.dll ;
+BuildSubAssemblyOfScriptUpdater IntegrationTests.dll : $(allupdaters) : $(nunit) ;
+BuildSubAssemblyOfScriptUpdater ScriptUpdater.exe : IntegrationTests.dll $(allupdaters) ;
