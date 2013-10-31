@@ -1,5 +1,8 @@
-﻿using ICSharpCode.NRefactory.CSharp;
+﻿using System.Linq;
+using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
+using NUnit.Framework;
+using ScriptUpdating;
 
 namespace CSharpUpdater
 {
@@ -23,8 +26,13 @@ namespace CSharpUpdater
 
 		private void ReplaceIfRequired(AstNode nodeToResolve, AstNode nodeToReplace)
 		{
-			if (IsMemberReferenceTo(nodeToResolve, "UnityEngine.Component.gameObject"))
-				_replacementCollector.Add(nodeToReplace, "SceneObject");
+			var db = MemberReferenceReplaceKnowledge.Get();
+
+			var match = db.SingleOrDefault(pair => IsMemberReferenceTo(nodeToResolve, pair.Item1));
+			if (match == null)
+				return;
+
+			_replacementCollector.Add(nodeToReplace,match.Item2);
 		}
 	}
 }

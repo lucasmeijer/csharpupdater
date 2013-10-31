@@ -1,4 +1,6 @@
-﻿using Boo.Lang.Compiler.Ast;
+﻿using System.Linq;
+using Boo.Lang.Compiler.Ast;
+using ScriptUpdating;
 
 namespace BooUpdater
 {
@@ -15,10 +17,11 @@ namespace BooUpdater
 			if (node.Entity == null)
 				return;
 
-			if (node.Entity.FullName != "UnityEngine.Component.gameObject")
+			var match = MemberReferenceReplaceKnowledge.Get().SingleOrDefault(pair => node.Entity.FullName == pair.Item1);
+			if (match == null)
 				return;
 
-			_replacementCollector.Add(node.LexicalInfo,node.Name.Length,"SceneObject");
+			_replacementCollector.Add(node.LexicalInfo,node.Name.Length,match.Item2);
 		}
 	}
 }

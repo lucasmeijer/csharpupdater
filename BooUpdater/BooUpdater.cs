@@ -90,7 +90,7 @@ namespace BooUpdater
 
 		private IEnumerable<DepthFirstVisitor> SmallPipeline(ReplacementCollector collector)
 		{
-			yield return new PropertyUpperCaser(collector, true);
+			yield return new MemberReferenceReplacer(collector);
 		}
 	}
 }

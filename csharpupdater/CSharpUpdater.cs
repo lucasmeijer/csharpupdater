@@ -123,7 +123,7 @@ namespace CSharpUpdater
 
 		private IEnumerable<ReplacingAstVisitor> SmallPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
 		{
-			yield return new PropertyUpperCaser(replacementCollector, resolver, true);
+			yield return new MemberReferenceReplacer(replacementCollector, resolver);
 		}
 	}
 }

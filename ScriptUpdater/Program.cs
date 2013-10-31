@@ -10,8 +10,12 @@ namespace ScriptUpdater
 	{
 		static void Main(string[] args)
 		{
-			var dir = "C:\\Users\\Public\\Documents\\Unity Projects\\4-0_AngryBots\\Assets";
+			//var dir = "C:\\Users\\Public\\Documents\\Unity Projects\\4-0_AngryBots\\Assets";
 			//var dir = "C:\\Users\\box1\\Documents\\stealth\\Assets";
+
+			var dir = args[0];
+			dir.Replace("/", "\\");
+			Console.WriteLine("About to upgrade scripts in : "+dir);
 
 			UpdateLanguage(dir, ".js", new JavascriptUpdater.JavascriptUpdater());
 			UpdateLanguage(dir, ".cs", new CSharpUpdater.CSharpUpdater());
@@ -23,14 +27,7 @@ namespace ScriptUpdater
 			var files = allfiles.Where(f => Path.GetExtension(f).ToLower() == extension);
 			var output = updater.UpdateSmall(files.Select(SourceFile.For).ToArray());
 			foreach (var file in output)
-			{
-				if (file.FileName.Contains("PatrolPoint.js"))
-				{
-					Console.WriteLine("Writing:");
-					Console.WriteLine(file.Contents);
-				}
 				File.WriteAllText(file.FileName, file.Contents);
-			}
 		}
 
 		private static IEnumerable<string> AllFilesIn(string dir)
