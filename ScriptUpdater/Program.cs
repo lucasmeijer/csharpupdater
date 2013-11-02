@@ -27,8 +27,9 @@ namespace ScriptUpdater
 			var files = allfiles.Where(f => Path.GetExtension(f).ToLower() == extension);
 			var output = updater.UpdateSmall(files.Select(SourceFile.For).ToArray());
 			foreach (var file in output)
-				File.WriteAllText(file.FileName, file.Contents);
+				file.Write();
 		}
+
 
 		private static IEnumerable<string> AllFilesIn(string dir)
 		{

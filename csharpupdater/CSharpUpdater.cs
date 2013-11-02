@@ -67,10 +67,8 @@ namespace CSharpUpdater
 		{
 			IProjectContent project = new CSharpProjectContent();
 			var cecilLoader = new CecilLoader {LazyLoad = true};
-			var assembly =
-				cecilLoader.LoadAssemblyFile(
-					"C:/Program Files (x86)/Unity/Editor/Data/PlaybackEngines/windowsstandaloneplayer/Managed/UnityEngine.dll");
-			project = project.AddAssemblyReferences(assembly);
+			project = project.AddAssemblyReferences(cecilLoader.LoadAssemblyFile("C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll"));
+			project = project.AddAssemblyReferences(cecilLoader.LoadAssemblyFile("C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll"));
 			project.AddAssemblyReferences(new CecilLoader().LoadAssemblyFile(typeof (object).Assembly.Location));
 			project = AddSourceFilesToProject(sourceFilesData, project);
 	
@@ -123,7 +121,7 @@ namespace CSharpUpdater
 
 		private IEnumerable<ReplacingAstVisitor> SmallPipeline(ReplacementCollector replacementCollector, CSharpAstResolver resolver)
 		{
-			yield return new MemberReferenceReplacer(replacementCollector, resolver);
+			yield return new DepricatedComponentPropertyGetterReplacer(replacementCollector, resolver);
 		}
 	}
 }
