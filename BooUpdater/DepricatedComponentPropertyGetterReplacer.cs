@@ -23,7 +23,7 @@ namespace BooUpdater
 				return;
 
 			var length = node.Name.Length;
-	
+			
 			_replacementCollector.Add(node.LexicalInfo,length, "GetComponent.<"+match.Item2+">()");
 		}
 	}

@@ -73,6 +73,26 @@ namespace IntegrationTests.DepricatedComponentGetterReplacerTests
 		}
 	}
 
+	class BinaryOperatorThatCanExpandWorks : IntegrationTest
+	{
+		protected override void CSharp(out string i, out string e)
+		{
+			i = "class C : UnityEngine.MonoBehaviour { void S() { camera.depthTextureMode |= DepthTextureMode.DepthNormals; } }";
+			e = "class C : UnityEngine.MonoBehaviour { void S() { GetComponent<Camera>().DepthTextureMode |= DepthTextureMode.DepthNormals; } }";
+		}
+
+		protected override void Boo(out string i, out string e)
+		{
+			i = "class C(UnityEngine.MonoBehaviour):\n def S():\n  camera.depthTextureMode |= DepthTextureMode.DepthNormals\n";
+			e = "class C(UnityEngine.MonoBehaviour):\n def S():\n  GetComponent.<Camera>().DepthTextureMode |= DepthTextureMode.DepthNormals\n";
+		}
+
+		protected override void Javascript(out string i, out string e)
+		{
+			i = "camera.depthTextureMode |= DepthTextureMode.DepthNormals;";
+			e = "GetComponent.<Camera>().DepthTextureMode |= DepthTextureMode.DepthNormals;";
+		}
+	}
 
 	class WillNotModifySomethingCalledMonoBehaviourButThatIsNotOurMonoBehaviour : IntegrationTest
 	{

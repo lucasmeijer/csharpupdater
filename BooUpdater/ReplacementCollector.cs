@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Boo.Lang.Compiler.Ast;
+using NUnit.Framework;
 using ScriptUpdating;
 
 namespace BooUpdater
 {
 	internal class ReplacementCollector
 	{
-		struct Replacement
+		class Replacement
 		{
 			public LexicalInfo start;
 			public int length;
@@ -29,6 +30,15 @@ namespace BooUpdater
 			{
 				replacements = new List<Replacement>();
 				_replacements[lexicalInfo.FileName] = replacements;
+			}
+
+			//sometimes boo will expand something like this  bla |= 2 into  bla = bla | 2,  and therefore the visitor will visit bla twice. this is fine.
+			var preexisting = replacements.FirstOrDefault(r => r.start == lexicalInfo);
+			if (preexisting != null)
+			{
+				if (preexisting.replacementstring != replacementstring || preexisting.length != length)
+					throw new ArgumentException("Replacement being requested on a location that already has a replacement. " + lexicalInfo);
+				return;
 			}
 
 			replacements.Add(new Replacement() {length = length, start = lexicalInfo, replacementstring = replacementstring});
