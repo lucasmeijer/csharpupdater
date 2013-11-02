@@ -23,7 +23,7 @@ namespace CSharpUpdater
 				return;
 
 			//doing a manual resolve here. as I don't know how to use NRefactory to resolve an identifier that we make on the fly from the argumenstring,   in the context of the "UnresolvedFile".
-			var oldType = _resolver.Compilation.ReferencedAssemblies.Single().GetTypeDefinition("UnityEngine", argumentused);
+			var oldType = _resolver.Compilation.ReferencedAssemblies.First().GetTypeDefinition("UnityEngine", argumentused);
 			var replacement = oldType == null ? argumentused : oldType.FullName;
 	
 			_replacementCollector.Add(invocationExpression.Arguments.Single(),"typeof("+replacement+")");

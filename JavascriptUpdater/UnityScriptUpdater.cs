@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using Boo.Lang.Compiler;
 using UnityScript;
 
@@ -6,7 +8,7 @@ namespace JavascriptUpdater
 {
 	public class JavascriptUpdater : BooUpdater.BooUpdater
 	{
-		class MyUnityScriptCompiler : UnityScriptCompiler
+		private class MyUnityScriptCompiler : UnityScriptCompiler
 		{
 			public BooCompiler GetCompiler()
 			{
@@ -19,12 +21,11 @@ namespace JavascriptUpdater
 			return new MyUnityScriptCompiler().GetCompiler();
 		}
 
-		override protected void SetupCompilerPipeline()
+		protected override void SetupCompilerPipeline()
 		{
 			base.SetupCompilerPipeline();
 			_compiler.Parameters.Pipeline = UnityScriptCompiler.Pipelines.AdjustBooPipeline(_compiler.Parameters.Pipeline);
 		}
-
 
 		protected override void SetupCompilerParameters()
 		{
@@ -32,13 +33,21 @@ namespace JavascriptUpdater
 
 			var parameters = (UnityScriptCompilerParameters) _compiler.Parameters;
 			parameters.ScriptMainMethod = "MyMain";
-			parameters.Imports = new Boo.Lang.List<String>() { "UnityEngine"};
-			
-			var monobehaviour = OldUnityEngineAssembly().GetType("UnityEngine.MonoBehaviour");
-			if (monobehaviour == null)
-				throw new Exception();
+			parameters.Imports = new Boo.Lang.List<String>() {"UnityEngine"};
 
-			parameters.ScriptBaseType = monobehaviour;
+			parameters.ScriptBaseType = FindMonoBehaviour();
+		}
+
+		private System.Type FindMonoBehaviour()
+		{
+			Assembly[] myassemblies = LoadAssembliesToReference();
+			foreach (var assembly in myassemblies)
+			{
+				var monobehaviour = assembly.GetType("UnityEngine.MonoBehaviour");
+				if (monobehaviour != null)
+					return monobehaviour;
+			}
+			throw new Exception("MonoBehaviour not found");
 		}
 	}
 }

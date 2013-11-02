@@ -38,6 +38,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssembliesToReference.cs" />
     <Compile Include="DepricatedComponentPropertyGetterReplacerKnowledge.cs" />
     <Compile Include="IScriptUpdater.cs" />
     <Compile Include="MemberReferenceReplaceKnowledge.cs" />

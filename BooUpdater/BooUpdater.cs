@@ -64,14 +64,13 @@ namespace BooUpdater
 			foreach(var define in PreprocessorDefines.Get())
 				_compiler.Parameters.Defines.Add(define, "1");
 
-			_compiler.Parameters.References.Add(OldUnityEngineAssembly());
+			foreach (var assembly in LoadAssembliesToReference())
+				_compiler.Parameters.References.Add(assembly);
 		}
 
-		
-
-		protected Assembly OldUnityEngineAssembly()
+		protected Assembly[] LoadAssembliesToReference()
 		{
-			return Assembly.LoadFrom(OldUnityEngineLocation);
+			return AssembliesToReference.Get().Select(Assembly.LoadFrom).ToArray();
 		}
 
 		protected virtual BooCompiler CreateCompiler()

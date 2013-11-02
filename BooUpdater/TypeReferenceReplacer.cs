@@ -24,6 +24,7 @@ namespace BooUpdater
 	}
 
 	[TestFixture]
+	[Ignore("Requires .OriginalName boo modification")]
 	internal class TypeReferenceReplacerTests : BooUpdaterTestBase
 	{
 		[Test]

@@ -67,8 +67,10 @@ namespace CSharpUpdater
 		{
 			IProjectContent project = new CSharpProjectContent();
 			var cecilLoader = new CecilLoader {LazyLoad = true};
-			project = project.AddAssemblyReferences(cecilLoader.LoadAssemblyFile("C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll"));
-			project = project.AddAssemblyReferences(cecilLoader.LoadAssemblyFile("C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll"));
+			var assembliesToReference = AssembliesToReference.Get();
+			foreach(var assembly in assembliesToReference)
+				project = project.AddAssemblyReferences(cecilLoader.LoadAssemblyFile(assembly));
+			
 			project.AddAssemblyReferences(new CecilLoader().LoadAssemblyFile(typeof (object).Assembly.Location));
 			project = AddSourceFilesToProject(sourceFilesData, project);
 	
