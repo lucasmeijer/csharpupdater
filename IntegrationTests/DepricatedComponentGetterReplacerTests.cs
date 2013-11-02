@@ -48,6 +48,32 @@ namespace IntegrationTests.DepricatedComponentGetterReplacerTests
 		}
 	}
 
+	class CanResolveThroughGenericList : IntegrationTest
+	{
+		protected override void CSharp(out string i, out string e)
+		{
+			i = "using UnityEngine; using System.Collections.Generic; class C { void S() { var meshFilters = new List<MeshFilter>(); foreach(var meshFilter in meshFilters) { var a = meshFilter.renderer.sharedMaterials; } } }";
+			e = "using UnityEngine; using System.Collections.Generic; class C { void S() { var meshFilters = new List<MeshFilter>(); foreach(var meshFilter in meshFilters) { var a = meshFilter.GetComponent<Renderer>().SharedMaterials; } } }";
+		}
+
+		protected override void Boo(out string i, out string e)
+		{
+			i = "class C:\n def S():\n  a as System.Collections.Generic.List[of UnityEngine.MeshFilter] = null\n  b = a[0].renderer";
+			e = "class C:\n def S():\n  a as System.Collections.Generic.List[of UnityEngine.MeshFilter] = null\n  b = a[0].GetComponent.<Renderer>()";
+			
+			//todo: emit actual boo code, instead of unityscript generics
+			//e = "class C:\n def S():\n  a as System.Collections.Generic.List[of UnityEngine.MeshFilter] = null\n  b = a[0].GetComponent[of Renderer]()";
+			
+		}
+
+		protected override void Javascript(out string i, out string e)
+		{
+			i = "function S() { var a:System.Collections.Generic.List.<MeshFilter> = null; for (var b in a) { var c = b.renderer; } }";
+			e = "function S() { var a:System.Collections.Generic.List.<MeshFilter> = null; for (var b in a) { var c = b.GetComponent.<Renderer>(); } }";
+		}
+	}
+
+
 	class WillNotModifySomethingCalledMonoBehaviourButThatIsNotOurMonoBehaviour : IntegrationTest
 	{
 		//note there is no using UnityEngine;
