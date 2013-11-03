@@ -36,8 +36,9 @@ namespace BooUpdater
 			var preexisting = replacements.FirstOrDefault(r => r.start == lexicalInfo);
 			if (preexisting != null)
 			{
-				if (preexisting.replacementstring != replacementstring || preexisting.length != length)
-					throw new ArgumentException("Replacement being requested on a location that already has a replacement. " + lexicalInfo);
+				//to fix this properly, we need to do something smarter than stringbased replacement, but actually modify the AST.
+				//if (preexisting.replacementstring != replacementstring || preexisting.length != length)
+				//	throw new ArgumentException("Replacement being requested on a location that already has a replacement. " + lexicalInfo);
 				return;
 			}
 

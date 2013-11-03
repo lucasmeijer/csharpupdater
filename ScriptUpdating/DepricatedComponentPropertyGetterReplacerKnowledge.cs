@@ -15,9 +15,10 @@ namespace ScriptUpdating
 
 		private static IEnumerable<Tuple<string, string>> DataFor(string klass)
 		{
-			yield return new Tuple<string, string>(klass + ".rigidbody", "Rigidbody");
+			yield return new Tuple<string, string>(klass + ".rigidbody", "Unity.Runtime.Physics.RigidBody");
+			//yield return new Tuple<string, string>(klass + ".rigidbody", "Rigidbody");
 			yield return new Tuple<string, string>(klass + ".rigidbody2D", "Rigidbody2D");
-			//yield return new Tuple<string, string>(klass + ".rigidbody", "Unity.Runtime.Physics.RigidBody");
+			
 			yield return new Tuple<string, string>(klass + ".collider", "Collider");
 			yield return new Tuple<string, string>(klass + ".collider2D", "Collider2D");
 			yield return new Tuple<string, string>(klass + ".constantForce", "ConstantForce");

@@ -80,11 +80,11 @@ namespace BooUpdater
 
 		private IEnumerable<DepthFirstVisitor> UpdatingPipeline(ReplacementCollector collector)
 		{
-			yield return new PropertyUpperCaser(collector);
 			yield return new DepricatedComponentPropertyGetterReplacer(collector);
 			yield return new MemberReferenceReplacer(collector);
 			yield return new TypeReferenceReplacer(collector);
 			yield return new StringBasedGetComponentReplacer(collector);
+			yield return new PropertyUpperCaser(collector);
 		}
 
 		private IEnumerable<DepthFirstVisitor> SmallPipeline(ReplacementCollector collector)
