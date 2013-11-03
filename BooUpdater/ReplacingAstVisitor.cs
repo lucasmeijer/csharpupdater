@@ -2,7 +2,7 @@
 
 namespace BooUpdater
 {
-	internal abstract class ReplacingAstVisitor : DepthFirstVisitor
+	public abstract class ReplacingAstVisitor : DepthFirstVisitor
 	{
 		protected readonly ReplacementCollector _replacementCollector;
 

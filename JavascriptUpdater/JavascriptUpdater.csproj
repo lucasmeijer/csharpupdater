@@ -49,6 +49,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UnityScriptDepricatedComponentPropertyGetterReplacer.cs" />
     <Compile Include="UnityScriptUpdater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

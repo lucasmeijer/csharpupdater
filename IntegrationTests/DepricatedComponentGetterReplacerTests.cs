@@ -17,13 +17,13 @@ namespace IntegrationTests.DepricatedComponentGetterReplacerTests
 		protected override void Boo(out string i, out string e)
 		{
 			i = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    rigidbody.mass = 10f";
-			e = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    GetComponent.<Unity.Runtime.Physics.RigidBody>().Mass = 10f";
+			e = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    GetComponent[of Unity.Runtime.Physics.RigidBody]().Mass = 10f";
 		}
 
 		protected override void Javascript(out string i, out string e)
 		{
 			i = "function S() { rigidbody.mass = 10f; }";
-			e = "function S() { GetComponent.<Unity.Runtime.Physics.RigidBody>().Mass = 10f; }";
+			e = "function S() { GetComponent(Unity.Runtime.Physics.RigidBody).Mass = 10f; }";
 		}
 	}
 
@@ -38,13 +38,13 @@ namespace IntegrationTests.DepricatedComponentGetterReplacerTests
 		protected override void Boo(out string i, out string e)
 		{
 			i = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    self.rigidbody.mass = 10f";
-			e = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    self.GetComponent.<Unity.Runtime.Physics.RigidBody>().Mass = 10f";
+			e = "class C(UnityEngine.MonoBehaviour):\n  def Start():\n    self.GetComponent[of Unity.Runtime.Physics.RigidBody]().Mass = 10f";
 		}
 
 		protected override void Javascript(out string i, out string e)
 		{
 			i = "function S() { this.rigidbody.mass = 10f; }";
-			e = "function S() { this.GetComponent.<Unity.Runtime.Physics.RigidBody>().Mass = 10f; }";
+			e = "function S() { this.GetComponent(Unity.Runtime.Physics.RigidBody).Mass = 10f; }";
 		}
 	}
 
@@ -59,17 +59,13 @@ namespace IntegrationTests.DepricatedComponentGetterReplacerTests
 		protected override void Boo(out string i, out string e)
 		{
 			i = "class C:\n def S():\n  a as System.Collections.Generic.List[of UnityEngine.MeshFilter] = null\n  b = a[0].renderer";
-			e = "class C:\n def S():\n  a as System.Collections.Generic.List[of UnityEngine.MeshFilter] = null\n  b = a[0].GetComponent.<Renderer>()";
-			
-			//todo: emit actual boo code, instead of unityscript generics
-			//e = "class C:\n def S():\n  a as System.Collections.Generic.List[of UnityEngine.MeshFilter] = null\n  b = a[0].GetComponent[of Renderer]()";
-			
+			e = "class C:\n def S():\n  a as System.Collections.Generic.List[of UnityEngine.MeshFilter] = null\n  b = a[0].GetComponent[of Renderer]()";
 		}
 
 		protected override void Javascript(out string i, out string e)
 		{
 			i = "function S() { var a:System.Collections.Generic.List.<MeshFilter> = null; for (var b in a) { var c = b.renderer; } }";
-			e = "function S() { var a:System.Collections.Generic.List.<MeshFilter> = null; for (var b in a) { var c = b.GetComponent.<Renderer>(); } }";
+			e = "function S() { var a:System.Collections.Generic.List.<MeshFilter> = null; for (var b in a) { var c = b.GetComponent(Renderer); } }";
 		}
 	}
 
@@ -84,13 +80,13 @@ namespace IntegrationTests.DepricatedComponentGetterReplacerTests
 		protected override void Boo(out string i, out string e)
 		{
 			i = "class C(UnityEngine.MonoBehaviour):\n def S():\n  camera.depthTextureMode |= DepthTextureMode.DepthNormals\n";
-			e = "class C(UnityEngine.MonoBehaviour):\n def S():\n  GetComponent.<Camera>().DepthTextureMode |= DepthTextureMode.DepthNormals\n";
+			e = "class C(UnityEngine.MonoBehaviour):\n def S():\n  GetComponent[of Camera]().DepthTextureMode |= DepthTextureMode.DepthNormals\n";
 		}
 
 		protected override void Javascript(out string i, out string e)
 		{
 			i = "camera.depthTextureMode |= DepthTextureMode.DepthNormals;";
-			e = "GetComponent.<Camera>().DepthTextureMode |= DepthTextureMode.DepthNormals;";
+			e = "GetComponent(Camera).DepthTextureMode |= DepthTextureMode.DepthNormals;";
 		}
 	}
 

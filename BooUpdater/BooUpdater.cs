@@ -78,7 +78,7 @@ namespace BooUpdater
 			return new BooCompiler();
 		}
 
-		private IEnumerable<DepthFirstVisitor> UpdatingPipeline(ReplacementCollector collector)
+		protected virtual IEnumerable<DepthFirstVisitor> UpdatingPipeline(ReplacementCollector collector)
 		{
 			yield return new DepricatedComponentPropertyGetterReplacer(collector);
 			yield return new MemberReferenceReplacer(collector);

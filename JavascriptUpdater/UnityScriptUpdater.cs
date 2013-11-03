@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Boo.Lang.Compiler;
+using Boo.Lang.Compiler.Ast;
+using BooUpdater;
 using UnityScript;
 
 namespace JavascriptUpdater
@@ -36,6 +39,21 @@ namespace JavascriptUpdater
 			parameters.Imports = new Boo.Lang.List<String>() {"UnityEngine"};
 
 			parameters.ScriptBaseType = FindMonoBehaviour();
+		}
+
+		protected override IEnumerable<DepthFirstVisitor> UpdatingPipeline(ReplacementCollector collector)
+		{
+			var pipeline = base.UpdatingPipeline(collector);
+			return Replace(pipeline, typeof (DepricatedComponentPropertyGetterReplacer),new UnityScriptDepricatedComponentPropertyGetterReplacer(collector));
+		}
+
+		private IEnumerable<DepthFirstVisitor> Replace(IEnumerable<DepthFirstVisitor> pipeline, Type type, ReplacingAstVisitor replacement)
+		{
+			var pipe = pipeline.ToArray();
+			for (int i=0; i!= pipe.Length; i++)
+				if (type.IsInstanceOfType(pipe[i]))
+					pipe[i] = replacement;
+			return pipe;
 		}
 
 		private System.Type FindMonoBehaviour()

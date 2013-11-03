@@ -5,7 +5,7 @@ using ScriptUpdating;
 
 namespace BooUpdater
 {
-	class DepricatedComponentPropertyGetterReplacer : ReplacingAstVisitor
+	public class DepricatedComponentPropertyGetterReplacer : ReplacingAstVisitor
 	{
 		public DepricatedComponentPropertyGetterReplacer(ReplacementCollector replacementCollector) : base(replacementCollector)
 		{
@@ -24,7 +24,12 @@ namespace BooUpdater
 
 			var length = node.Name.Length;
 			
-			_replacementCollector.Add(node.LexicalInfo,length, "GetComponent.<"+match.Item2+">()");
+			_replacementCollector.Add(node.LexicalInfo,length, ReplacementStringFor(match.Item2));
+		}
+
+		protected virtual string ReplacementStringFor(string type)
+		{
+			return "GetComponent[of "+type+"]()";
 		}
 	}
 }

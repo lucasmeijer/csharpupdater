@@ -7,7 +7,7 @@ using ScriptUpdating;
 
 namespace BooUpdater
 {
-	internal class ReplacementCollector
+	public class ReplacementCollector
 	{
 		class Replacement
 		{
