@@ -41,13 +41,12 @@ namespace JavascriptUpdater
 			parameters.ScriptBaseType = FindMonoBehaviour();
 		}
 
-		protected override IEnumerable<DepthFirstVisitor> UpdatingPipeline(ReplacementCollector collector)
+		protected override DepthFirstVisitor[] PostProcessPipeline(DepthFirstVisitor[] pipeline, ReplacementCollector collector)
 		{
-			var pipeline = base.UpdatingPipeline(collector);
 			return Replace(pipeline, typeof (DepricatedComponentPropertyGetterReplacer),new UnityScriptDepricatedComponentPropertyGetterReplacer(collector));
 		}
 
-		private IEnumerable<DepthFirstVisitor> Replace(IEnumerable<DepthFirstVisitor> pipeline, Type type, ReplacingAstVisitor replacement)
+		private static DepthFirstVisitor[] Replace(IEnumerable<DepthFirstVisitor> pipeline, Type type, ReplacingAstVisitor replacement)
 		{
 			var pipe = pipeline.ToArray();
 			for (int i=0; i!= pipe.Length; i++)

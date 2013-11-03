@@ -42,6 +42,7 @@ namespace BooUpdater
 
 			var collector = new ReplacementCollector();
 			var pipeline = updatingPipeline(collector).ToArray();
+			pipeline = PostProcessPipeline(pipeline,collector);
 			foreach (DepthFirstVisitor step in pipeline)
 			{
 				step.Visit(result.CompileUnit);
@@ -49,6 +50,11 @@ namespace BooUpdater
 			collector.ApplyOn(inputs);
 
 			return inputs;
+		}
+
+		protected virtual DepthFirstVisitor[] PostProcessPipeline(DepthFirstVisitor[] pipeline, ReplacementCollector collector)
+		{
+			return pipeline;
 		}
 
 		protected virtual void SetupCompilerPipeline()
